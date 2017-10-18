@@ -1,7 +1,6 @@
 var User = require('../models/User');
 
 exports.registerUser = function(req,res){
-    console.log("Inicio");
     var user = new User;
     user.name = req.body.name;
     user.address = req.body.address;
