@@ -1,0 +1,2 @@
+http://mongoosejs.com/docs/schematypes.html - Array
+http://hmkcode.com/android-send-json-data-to-server/ - Android POST
