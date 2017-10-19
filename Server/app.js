@@ -27,7 +27,7 @@ app.use('/users', users);
 
 app.use('/api',userRoutes);
 
-var MongoDB = mongoose.connect('mongodb://localhost:27017/CMOV1').connection;
+var MongoDB = mongoose.connect('mongodb://localhost:27017/CMOV1',{ useMongoClient: true });
 MongoDB.on('error', function(err) { console.log(err.message); });
 MongoDB.once('open', function() {
   console.log("MongoDB connection open");
