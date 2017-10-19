@@ -31,6 +31,17 @@ exports.getAllUsers = function(req,res){
     });
 };
 
+exports.deleteAllUsers = function(req,res){
+    User.delete({},function(err){
+        if(err){
+            res.send(err);
+        }
+        else{
+            res.json({success: true, message: "All users are removed!"});
+        }
+    });
+};
+
 exports.logIn = function(req,res){
     User.findOne({email: req.body.email}, function(err, user){
         if(err){
