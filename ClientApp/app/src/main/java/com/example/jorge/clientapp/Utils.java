@@ -30,4 +30,9 @@ public class Utils {
                 "password\":\""+password+"\"" + "}";
         return json;
     }
+
+    public static String buildLogInJSON(String email, String password){
+        String json = "{\"email\":\""+email+"\",\"password\":\""+password+"\"}";
+        return  json;
+    }
 }

@@ -50,7 +50,8 @@ public class SignUp extends AppCompatActivity {
                 nif = etNif.getText().toString();
 
                 HttpAsyncTask post = new HttpAsyncTask();
-                post.execute("http://10.0.2.2:3000/api/user", name,address,nif,email,password);
+                post.execute(Routes.SignUpRouteEmulator, name,address,nif,email,password);
+                //post.execute("http://10.0.2.2:3000/api/user", name,address,nif,email,password);
             }
         });
     }

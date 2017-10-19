@@ -30,3 +30,17 @@ exports.getAllUsers = function(req,res){
         }
     });
 };
+
+exports.logIn = function(req,res){
+    User.findOne({email: req.body.email}, function(err, user){
+        if(err){
+            res.send(err);
+        }
+        if(!user){
+            res.json({success: false, message: "User not found!"});
+        }
+        else if(user){
+            res.json({success: true, message: "User "+req.body.email+" found!"});
+        }
+    });
+};
