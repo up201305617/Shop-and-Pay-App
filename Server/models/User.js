@@ -25,25 +25,21 @@ var UserSchema = new Schema({
     },
     password: {
         type: String,
-        required: 'The User must have a password.',
+        required: 'The User must have a password.'
     }/*,
-    creditcard: [
-        {
-            type: {
-                type: String,
-                required: true
-            },
-            number: {
-                type: String,
-                required: 'A CreditCard must have a number.',
-                validate: validators.isLength(16)
-            },
-            validity: {
-                type: Date,
-                required: 'A CreditCard must have a validity date.'
-            }
-        }
-    ]*/
+    cctype:{
+        type: String,
+        required: true
+    },
+    ccnumber: {
+        type: String,
+        required: 'A CreditCard must have a number.',
+        validate: validators.isLength(16)
+    },
+    ccvalidity: {
+        type: Date,
+        required: 'A CreditCard must have a validity date.'
+    }*/
 });
 
 module.exports = mongoose.model('User', UserSchema, 'User');

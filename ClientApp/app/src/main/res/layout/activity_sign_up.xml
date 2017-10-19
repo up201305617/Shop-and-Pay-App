@@ -53,10 +53,27 @@
             android:hint="Password"
             android:inputType="textPassword" />
 
+        <EditText
+            android:id="@+id/ccType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tipo Cartão Crédito"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/ccNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Número Cartão de Crédito"
+            android:inputType="number" />
+
         <Button
             android:id="@+id/register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Register" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
