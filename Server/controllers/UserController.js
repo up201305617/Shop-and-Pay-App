@@ -6,7 +6,7 @@ exports.registerUser = function(req,res){
     user.address = req.body.address;
     user.nif = req.body.nif;
     user.email = req.body.email;
-    user.password = req.body.email;
+    user.password = req.body.password;
     user.creditcard = req.body.creditcard;
     user.save(function(err) {
         if (err) {
@@ -32,7 +32,7 @@ exports.getAllUsers = function(req,res){
 };
 
 exports.deleteAllUsers = function(req,res){
-    User.delete({},function(err){
+    User.remove({},function(err){
         if(err){
             res.send(err);
         }
