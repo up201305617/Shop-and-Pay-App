@@ -7,11 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.CharConversionException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
@@ -21,9 +23,10 @@ import java.net.URL;
 
 public class SignUp extends AppCompatActivity {
 
-    String name, address, email, password, nif;
-    EditText etName, etAddress, etEmail, etPassword, etNif;
+    String name, address, email, password, nif, ccType, ccNumber, ccMonth, ccYear;
+    EditText etName, etAddress, etEmail, etPassword, etNif, etCCNumber, etCCMonth, etCCYear;
     Button register;
+    RadioGroup type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +38,42 @@ public class SignUp extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.password);
         etNif = (EditText) findViewById(R.id.nif);
         register = (Button) findViewById(R.id.register);
+        type = (RadioGroup) findViewById(R.id.ccType);
+        etCCNumber = (EditText) findViewById(R.id.ccNumber);
+        etCCMonth = (EditText) findViewById(R.id.ccMonth);
+        etCCYear = (EditText) findViewById(R.id.ccYear);
+
         register.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if (etName.length() == 0 || etPassword.length() == 0 || etAddress.length() == 0 || etEmail.length() == 0 || etNif.length() == 0) {
+                int checkedRadioButtonId = type.getCheckedRadioButtonId();
+
+                if (etName.length() == 0 || etPassword.length() == 0 || etAddress.length() == 0 || etEmail.length() == 0 || etNif.length() == 0 || checkedRadioButtonId == -1) {
                     Toast.makeText(getBaseContext(), "Todos os campos devem ser preenchidos.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 name = etName.getText().toString();
                 address = etAddress.getText().toString();
                 email = etEmail.getText().toString();
                 password = etPassword.getText().toString();
                 nif = etNif.getText().toString();
+                ccNumber = etCCNumber.getText().toString();
+                ccMonth = etCCMonth.getText().toString();
+                ccYear = etCCYear.getText().toString();
+
+                if(!Utils.checkDate(ccMonth,ccYear)){
+                    Toast.makeText(getBaseContext(), "A data está errada.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (checkedRadioButtonId == R.id.visa) {
+                    ccType = "VISA";
+                }
+                else if(checkedRadioButtonId == R.id.mastercard){
+                    ccType = "MasterCard";
+                }
 
                 HttpAsyncTask post = new HttpAsyncTask();
                 post.execute(Routes.SignUpRouteEmulator, name,address,nif,email,password);
