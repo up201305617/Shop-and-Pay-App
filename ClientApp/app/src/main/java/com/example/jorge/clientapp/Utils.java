@@ -24,12 +24,15 @@ public class Utils {
         return result;
     }
 
-    public static String buildUserJSON(String name, String address, String NIF, String email, String password){
+    public static String buildUserJSON(String name, String address, String NIF, String email, String password, String cctype, String ccnumber, String ccvalidity){
         String json = "{\"name\":\""+name+"\",\"" +
                 "address\":\""+address+"\",\"" +
                 "nif\":\""+NIF+"\",\"" +
                 "email\":\""+email+"\",\"" +
-                "password\":\""+password+"\"" + "}";
+                "password\":\""+password+"\",\"" +
+                "cctype\":\""+cctype+"\",\""+
+                "ccnumber\":\""+ccnumber+"\",\""+
+                "ccvalidity\":\""+ccvalidity+"\""+"}";
         return json;
     }
 
@@ -51,5 +54,9 @@ public class Utils {
         else{
             return true;
         }
+    }
+
+    public static String buildDate(String month, String year){
+        return month+"/"+year;
     }
 }

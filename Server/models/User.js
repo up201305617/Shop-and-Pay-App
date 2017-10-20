@@ -26,7 +26,7 @@ var UserSchema = new Schema({
     password: {
         type: String,
         required: 'The User must have a password.'
-    }/*,
+    },
     cctype:{
         type: String,
         required: true
@@ -37,9 +37,9 @@ var UserSchema = new Schema({
         validate: validators.isLength(16)
     },
     ccvalidity: {
-        type: Date,
+        type: String,
         required: 'A CreditCard must have a validity date.'
-    }*/
+    }
 });
 
 module.exports = mongoose.model('User', UserSchema, 'User');

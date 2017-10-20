@@ -7,7 +7,9 @@ exports.registerUser = function(req,res){
     user.nif = req.body.nif;
     user.email = req.body.email;
     user.password = req.body.password;
-    user.creditcard = req.body.creditcard;
+    user.cctype = req.body.cctype;
+    user.ccnumber = req.body.ccnumber;
+    user.ccvalidity = req.body.ccvalidity;
     user.save(function(err) {
         if (err) {
             res.send(err);

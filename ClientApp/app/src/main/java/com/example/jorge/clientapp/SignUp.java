@@ -23,7 +23,7 @@ import java.net.URL;
 
 public class SignUp extends AppCompatActivity {
 
-    String name, address, email, password, nif, ccType, ccNumber, ccMonth, ccYear;
+    String name, address, email, password, nif, ccType, ccNumber, ccMonth, ccYear, ccValidity;
     EditText etName, etAddress, etEmail, etPassword, etNif, etCCNumber, etCCMonth, etCCYear;
     Button register;
     RadioGroup type;
@@ -75,8 +75,10 @@ public class SignUp extends AppCompatActivity {
                     ccType = "MasterCard";
                 }
 
+                ccValidity = Utils.buildDate(ccMonth,ccYear);
+
                 HttpAsyncTask post = new HttpAsyncTask();
-                post.execute(Routes.SignUpRouteEmulator, name,address,nif,email,password);
+                post.execute(Routes.SignUpRouteEmulator, name,address,nif,email,password,ccType,ccNumber, ccValidity);
                 //post.execute("http://10.0.2.2:3000/api/user", name,address,nif,email,password);
             }
         });
@@ -96,7 +98,7 @@ public class SignUp extends AppCompatActivity {
                     urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
                     urlConnection.setRequestMethod("POST");
                     urlConnection.connect();
-                    String stringJson = Utils.buildUserJSON(params[1],params[2],params[3],params[4],params[5]);
+                    String stringJson = Utils.buildUserJSON(params[1],params[2],params[3],params[4],params[5],params[6],params[7],params[8]);
                     Log.i("String",stringJson);
                     OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
                     writer.write(stringJson);
