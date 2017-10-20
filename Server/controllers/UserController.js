@@ -51,7 +51,17 @@ exports.logIn = function(req,res){
             res.json({success: false, message: "User not found!"});
         }
         else if(user){
-            res.json({success: true, message: "User "+req.body.email+" found!"});
+            user.comparePassword(req.body.password, function(err,isMatch){
+                if(err){
+                    throw err;
+                }
+                else if(!isMatch){
+                    res.json({success: false, message: "Wrong Password"});
+                }
+                else{
+                    res.json({success: true, message: "LogIn"});
+                }
+            });
         }
     });
 };

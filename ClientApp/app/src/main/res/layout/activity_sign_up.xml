@@ -115,6 +115,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Número Cartão de Crédito"
+                android:maxLength="16"
                 android:inputType="number" />
 
             <LinearLayout
