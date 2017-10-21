@@ -1,4 +1,4 @@
-package com.example.jorge.clientapp;
+package com.example.jorge.clientapp.activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.jorge.clientapp.R;
+import com.example.jorge.clientapp.Routes;
+import com.example.jorge.clientapp.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;

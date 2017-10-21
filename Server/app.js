@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var userRoutes = require('./routes/UserRoutes');
+var productRoutes = require('./routes/ProductRoutes');
+var Product = require("./models/Product");
 var app = express();
 var mongoose = require('mongoose');
 // view engine setup
@@ -25,13 +27,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 
-app.use('/api',userRoutes);
+app.use('/api', userRoutes);
+app.use('/api', productRoutes);
 
 var MongoDB = mongoose.connect('mongodb://localhost:27017/CMOV1',{ useMongoClient: true });
 MongoDB.on('error', function(err) { console.log(err.message); });
 MongoDB.once('open', function() {
   console.log("MongoDB connection open");
 });
+
+var product = new Product({
+  price: "1,20",
+  model: "YT2",
+  maker: "ASUS",
+  category: "mobile",
+  barcode: "222222222"
+});
+
+/*product.save(function(err){
+  console.log("Saved");
+  if(err){
+    console.log(err);
+  }
+});*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
