@@ -20,6 +20,7 @@ public class MainScreen extends AppCompatActivity {
     TextView tvWelcome;
     Button bScan;
     static Client c;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,5 +66,19 @@ public class MainScreen extends AppCompatActivity {
         });
         downloadDialog.setNegativeButton(buttonNo, null);
         return downloadDialog.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                String contents = data.getStringExtra("SCAN_RESULT");
+                String format = data.getStringExtra("SCAN_RESULT_FORMAT");
+                Intent intent;
+                intent = new Intent(MainScreen.this, ProductDetails.class);
+                intent.putExtra("barcode",contents);
+                startActivity(intent);
+            }
+        }
     }
 }
