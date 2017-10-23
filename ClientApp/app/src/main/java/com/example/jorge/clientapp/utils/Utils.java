@@ -1,5 +1,7 @@
 package com.example.jorge.clientapp.utils;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,6 +41,11 @@ public class Utils {
     public static String buildLogInJSON(String email, String password){
         String json = "{\"email\":\""+email+"\",\"password\":\""+password+"\"}";
         return  json;
+    }
+
+    public static String buildGetProductJSON(String barcode){
+        String json = "{\"barcode\":\""+barcode+"\"}";
+        return json;
     }
 
     public static boolean checkDate(String month, String year){

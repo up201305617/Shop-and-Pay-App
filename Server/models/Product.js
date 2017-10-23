@@ -21,6 +21,7 @@ var ProductSchema = new Schema({
     },
     barcode:{
         type: String,
+        unique: true,
         required: "A Product must have a bar code."
     }
 });

@@ -41,15 +41,15 @@ var product = new Product({
   model: "YT2",
   maker: "ASUS",
   category: "mobile",
-  barcode: "222222222"
+  barcode: "61234567890"
 });
 
-/*product.save(function(err){
+product.save(function(err){
   console.log("Saved");
   if(err){
     console.log(err);
   }
-});*/
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

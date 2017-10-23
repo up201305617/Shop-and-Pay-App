@@ -29,12 +29,13 @@ exports.getAllProducts = function(req,res){
 };
 
 exports.getProductByBarcode = function(req,res){
-    Product.find({barcode: req.body.barcode},function(err,product){
+    console.log("Entrei");
+    Product.find({barcode: req.params.barcode},function(err,product){
         if(err){
-            throw err;
+            res.send(err);
         }
         else{
-            req.json({success: true, message: "Found product", product: product});
+            res.json({success: true, message: "Found product", product: product});
         }
     });
 };

@@ -19,6 +19,10 @@ public class Product {
         this.maker = maker;
     }
 
+    public Product(){
+
+    }
+
     public String getModel() {
         return model;
     }

@@ -6,14 +6,29 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.jorge.clientapp.R;
 import com.example.jorge.clientapp.entities.Client;
+import com.example.jorge.clientapp.entities.Product;
+import com.example.jorge.clientapp.utils.Routes;
+import com.example.jorge.clientapp.utils.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MainScreen extends AppCompatActivity {
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
@@ -74,11 +89,50 @@ public class MainScreen extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String contents = data.getStringExtra("SCAN_RESULT");
                 String format = data.getStringExtra("SCAN_RESULT_FORMAT");
-                Intent intent;
-                intent = new Intent(MainScreen.this, ProductDetails.class);
-                intent.putExtra("barcode",contents);
-                startActivity(intent);
+                HttpAsyncTask get = new HttpAsyncTask();
+                get.execute(Routes.GetProductByBarCode+contents);
             }
+        }
+    }
+
+    private class HttpAsyncTask extends AsyncTask<String, String, String> {
+        HttpURLConnection urlConnection;
+        @Override
+        protected String doInBackground(String... params) {
+            JSONObject response = null;
+            try {
+                URL url = new URL(params[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setDoInput(true);
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.connect();
+                /*OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
+                writer.write(json);
+                writer.flush();
+                writer.close();*/
+                InputStream input = urlConnection.getInputStream();
+                response = new JSONObject(Utils.convertInputStreamToString(input).toString());
+                Log.i("computador",response.toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                urlConnection.disconnect();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Intent intent;
+            Product p = new Product();
+            intent = new Intent(MainScreen.this, ProductDetails.class);
+            //intent.putExtra("barcode",contents);
+            //startActivity(intent);
         }
     }
 }
