@@ -59,7 +59,7 @@ exports.logIn = function(req,res){
                     res.json({success: false, message: "Wrong Password"});
                 }
                 else{
-                    res.json({success: true, message: "LogIn"});
+                    res.json({success: true, message: "LogIn", name: user.name});
                 }
             });
         }

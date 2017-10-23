@@ -7,11 +7,12 @@
     tools:context="com.example.jorge.clientapp.activities.LogIn">
 
     <LinearLayout
-        android:layout_width="585dp"
-        android:layout_height="810dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        tools:layout_editor_absoluteX="8dp"
+        tools:ignore="MissingConstraints">
 
         <EditText
             android:id="@+id/lEmail"

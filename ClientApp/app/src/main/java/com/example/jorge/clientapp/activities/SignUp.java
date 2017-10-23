@@ -11,13 +11,12 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.jorge.clientapp.R;
-import com.example.jorge.clientapp.Routes;
-import com.example.jorge.clientapp.Utils;
+import com.example.jorge.clientapp.utils.Routes;
+import com.example.jorge.clientapp.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.CharConversionException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;

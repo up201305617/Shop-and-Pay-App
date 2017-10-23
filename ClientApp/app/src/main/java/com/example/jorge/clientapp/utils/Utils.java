@@ -1,4 +1,4 @@
-package com.example.jorge.clientapp;
+package com.example.jorge.clientapp.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

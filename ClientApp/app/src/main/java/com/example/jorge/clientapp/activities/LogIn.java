@@ -11,8 +11,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jorge.clientapp.R;
-import com.example.jorge.clientapp.Routes;
-import com.example.jorge.clientapp.Utils;
+import com.example.jorge.clientapp.entities.Client;
+import com.example.jorge.clientapp.utils.Routes;
+import com.example.jorge.clientapp.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +51,8 @@ public class LogIn extends AppCompatActivity {
                 }
                 else{
                     HttpAsyncTask post = new HttpAsyncTask();
-                    post.execute(Routes.LogInRouteEmulator, email,password);
+                    //post.execute(Routes.LogInRouteEmulator, email,password);
+                    post.execute(Routes.LogInRoute,email,password);
                     //post.execute("http://10.0.2.2:3000/api/login", email,password);
                 }
             }
@@ -106,7 +108,19 @@ public class LogIn extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-
+            Intent intent;
+            Client c = new Client();
+            boolean contains = result.matches(".*\\btrue\\b.*");
+            if (contains){
+                String name = result.replace("\"", "").replace("}", "").replace(",success:true", "");
+                name = name.substring(name.indexOf("name:") + 5, name.length());
+                c.setEmail(email);
+                c.setName(name);
+                intent = new Intent(LogIn.this, MainScreen.class);
+                intent.putExtra("Logged",c);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 }
