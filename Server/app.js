@@ -38,18 +38,19 @@ MongoDB.once('open', function() {
 
 var product = new Product({
   price: "1,20",
+  name: "Telemovel",
   model: "YT2",
   maker: "ASUS",
   category: "mobile",
   barcode: "61234567890"
 });
 
-product.save(function(err){
+/*product.save(function(err){
   console.log("Saved");
   if(err){
     console.log(err);
   }
-});
+});*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

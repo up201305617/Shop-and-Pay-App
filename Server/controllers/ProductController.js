@@ -28,14 +28,27 @@ exports.getAllProducts = function(req,res){
     });
 };
 
-exports.getProductByBarcode = function(req,res){
-    console.log("Entrei");
-    Product.find({barcode: req.params.barcode},function(err,product){
+exports.deleteAllProducts = function(req,res){
+    Product.remove({},function(err){
         if(err){
             res.send(err);
         }
         else{
-            res.json({success: true, message: "Found product", product: product});
+            res.json({success: true, message: "All Products are removed!"});
+        }
+    });
+};
+
+exports.getProductByBarcode = function(req,res){
+    Product.find({barcode: req.params.barcode},function(err,product){
+        if(err){
+            res.send(err);
+        }
+        else if(product!=null){
+            res.json({product: product});
+        }
+        else{
+            res.json({success: false, message: "Product Not Found"});
         }
     });
 };

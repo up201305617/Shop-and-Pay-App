@@ -7,6 +7,10 @@ var ProductSchema = new Schema({
         min: 0,
         required: 'A Product must have a price.'
     },
+    name:{
+        type: String,
+        required: "A Product must have a name."
+    },
     model: {
         type: String,
         required: "A Product must have a model."

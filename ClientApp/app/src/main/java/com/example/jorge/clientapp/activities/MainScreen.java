@@ -88,6 +88,9 @@ public class MainScreen extends AppCompatActivity {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String contents = data.getStringExtra("SCAN_RESULT");
+                if(contents!=null&&contents.length()>0){
+                    contents = contents.substring(0, contents.length() - 1);
+                }
                 String format = data.getStringExtra("SCAN_RESULT_FORMAT");
                 HttpAsyncTask get = new HttpAsyncTask();
                 get.execute(Routes.GetProductByBarCode+contents);
@@ -107,13 +110,10 @@ public class MainScreen extends AppCompatActivity {
                 urlConnection.setRequestMethod("GET");
                 urlConnection.setRequestProperty("Content-Type", "application/json");
                 urlConnection.connect();
-                /*OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
-                writer.write(json);
-                writer.flush();
-                writer.close();*/
                 InputStream input = urlConnection.getInputStream();
                 response = new JSONObject(Utils.convertInputStreamToString(input).toString());
-                Log.i("computador",response.toString());
+                //String r = response.toString().replace("[","").replace("]","").replace("{","").replace("}","").replace(":"," ").replace(","," ");
+                Log.i("RESPOSTA",response.toString());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -123,6 +123,8 @@ public class MainScreen extends AppCompatActivity {
             } finally {
                 urlConnection.disconnect();
             }
+            if(response!=null)
+                return response.toString();
             return null;
         }
 
@@ -130,9 +132,19 @@ public class MainScreen extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Intent intent;
             Product p = new Product();
+            Log.i("ENTREI",1+"");
+            Log.i("SPLIT",result);
             intent = new Intent(MainScreen.this, ProductDetails.class);
-            //intent.putExtra("barcode",contents);
-            //startActivity(intent);
+            String r = result.replace("[","").replace("]","").replace("{","").replace("}","").replace(":"," ").replace(","," ").replace("\"","");
+            Log.i("SUBSTITUICAO",r);
+            String[] split = r.split(" ");
+            p.setCategory(split[2]);
+            p.setModel(split[4]);
+            p.setPrice(split[6]);
+            p.setMaker(split[11]);
+            p.setName(split[13]);
+            intent.putExtra("Product",p);
+            startActivity(intent);
         }
     }
 }
