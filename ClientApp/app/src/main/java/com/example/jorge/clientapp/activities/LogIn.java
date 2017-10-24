@@ -121,6 +121,10 @@ public class LogIn extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
+            else{
+                Toast.makeText(getBaseContext(),"Wrong Credentials",Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
     }
 }

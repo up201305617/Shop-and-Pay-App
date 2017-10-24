@@ -22,6 +22,7 @@ public class ShopList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_list);
         list = (LinearLayout) findViewById(R.id.llShop);
+        float price=0;
         for(int i=0; i<MainScreen.c.getShopList().size();i++){
             final int temp = i;
             final TextView tv = new TextView(this);
@@ -29,9 +30,12 @@ public class ShopList extends AppCompatActivity {
             b.setText("X");
             b.setBackgroundColor(Color.RED);
             b.setTextColor(Color.WHITE);
+            b.setScaleX(0.5f);
+            b.setScaleY(0.5f);
             final LinearLayout l = new LinearLayout(this);
             l.setOrientation(LinearLayout.HORIZONTAL);
             tv.setText(MainScreen.c.getShopList().get(i).getName()+" "+MainScreen.c.getShopList().get(i).getPrice());
+            price+=Float.parseFloat(MainScreen.c.getShopList().get(i).getPrice());
             tv.setTextColor(Color.BLACK);
             tv.setTextSize(12);
             l.addView(tv);
@@ -42,9 +46,16 @@ public class ShopList extends AppCompatActivity {
                     MainScreen.c.getShopList().remove(temp);
                     l.removeView(tv);
                     l.removeView(b);
+                    finish();
+                    startActivity(getIntent());
                 }
             });
             list.addView(l);
         }
+        TextView totalPrice = new TextView(this);
+        totalPrice.setText("Total = "+price+"€");
+        totalPrice.setTextColor(Color.BLACK);
+        totalPrice.setTextSize(12);
+        list.addView(totalPrice);
     }
 }

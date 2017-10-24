@@ -12,6 +12,10 @@ public class Client implements Serializable {
     private String email;
     private String password;
     private ArrayList<Product> shopList;
+    private String address;
+    private String ccType;
+    private String ccNumber;
+    private String ccDate;
 
     public Client(){
         this.shopList = new ArrayList<Product>();
@@ -58,5 +62,37 @@ public class Client implements Serializable {
 
     public void addToList(Product p){
         this.shopList.add(p);
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCcType() {
+        return ccType;
+    }
+
+    public void setCcType(String ccType) {
+        this.ccType = ccType;
+    }
+
+    public String getCcNumber() {
+        return ccNumber;
+    }
+
+    public void setCcNumber(String ccNumber) {
+        this.ccNumber = ccNumber;
+    }
+
+    public String getCcDate() {
+        return ccDate;
+    }
+
+    public void setCcDate(String ccDate) {
+        this.ccDate = ccDate;
     }
 }

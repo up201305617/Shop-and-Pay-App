@@ -39,7 +39,7 @@ public class ProductDetails extends AppCompatActivity {
         tvModel = (TextView) findViewById(R.id.tvModel);
         tvModel.setText(p.getModel());
         tvPrice = (TextView) findViewById(R.id.tvPrice);
-        tvPrice.setText(p.getPrice());
+        tvPrice.setText(p.getPrice()+"€");
         tvCategory = (TextView) findViewById(R.id.tvCategory);
         tvCategory.setText(p.getCategory());
         addShopList = (Button) findViewById(R.id.bShopList);
@@ -50,7 +50,6 @@ public class ProductDetails extends AppCompatActivity {
             public void onClick(View v) {
                 MainScreen.c.addToList(p);
                 Toast.makeText(getBaseContext(),"Product added to shopping list.",Toast.LENGTH_SHORT).show();
-                //Log.i("TAMANHO",MainScreen.c.getShopList().size()+"");
             }
         });
     }

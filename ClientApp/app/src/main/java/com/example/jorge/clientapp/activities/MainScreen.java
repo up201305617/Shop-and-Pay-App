@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jorge.clientapp.R;
 import com.example.jorge.clientapp.entities.Client;
@@ -44,7 +45,7 @@ public class MainScreen extends AppCompatActivity {
         c = (Client) bundle.get("Logged");
 
         tvWelcome = (TextView) findViewById(R.id.tvWelcome);
-        tvWelcome.setText("Welcome back "+c.getName()+".");
+        tvWelcome.setText("Welcome "+c.getName()+".");
         bScan = (Button) findViewById(R.id.scan);
         bShopping = (Button) findViewById(R.id.bShopping);
         items = (TextView) findViewById(R.id.tvItems);
@@ -156,19 +157,26 @@ public class MainScreen extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Intent intent;
             Product p = new Product();
-            Log.i("ENTREI",1+"");
-            Log.i("SPLIT",result);
-            intent = new Intent(MainScreen.this, ProductDetails.class);
-            String r = result.replace("[","").replace("]","").replace("{","").replace("}","").replace(":"," ").replace(","," ").replace("\"","");
-            Log.i("SUBSTITUICAO",r);
-            String[] split = r.split(" ");
-            p.setCategory(split[2]);
-            p.setModel(split[4]);
-            p.setPrice(split[6]);
-            p.setMaker(split[11]);
-            p.setName(split[13]);
-            intent.putExtra("Product",p);
-            startActivity(intent);
+            boolean contains = result.matches(".*\\bfalse\\b.*");
+            if(!contains){
+                Log.i("ENTREI",1+"");
+                Log.i("SPLIT",result);
+                intent = new Intent(MainScreen.this, ProductDetails.class);
+                String r = result.replace("[","").replace("]","").replace("{","").replace("}","").replace(":"," ").replace(","," ").replace("\"","");
+                Log.i("SUBSTITUICAO",r);
+                String[] split = r.split(" ");
+                p.setCategory(split[2]);
+                p.setModel(split[4]);
+                p.setPrice(split[6]);
+                p.setMaker(split[10]);
+                p.setName(split[12]);
+                intent.putExtra("Product",p);
+                startActivity(intent);
+            }
+            else {
+                Toast.makeText(getBaseContext(),"Product Not Found",Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
     }
 }

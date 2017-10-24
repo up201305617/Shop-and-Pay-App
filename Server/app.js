@@ -37,7 +37,7 @@ MongoDB.once('open', function() {
 });
 
 var product = new Product({
-  price: "1,20",
+  price: "120.99",
   name: "Telemovel",
   model: "YT2",
   maker: "ASUS",

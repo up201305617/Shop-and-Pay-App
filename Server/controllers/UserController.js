@@ -12,10 +12,10 @@ exports.registerUser = function(req,res){
     user.ccvalidity = req.body.ccvalidity;
     user.save(function(err) {
         if (err) {
-            res.send(err);
+            res.json({success:false});
         }
         else {
-            res.json({ message: 'User created with email: ' + req.body.email + '.' });
+            res.json({success:true, message: 'User created with email: ' + req.body.email + '.' });
         }
     })
 };

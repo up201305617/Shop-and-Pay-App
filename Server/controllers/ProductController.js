@@ -40,14 +40,14 @@ exports.deleteAllProducts = function(req,res){
 };
 
 exports.getProductByBarcode = function(req,res){
-    Product.find({barcode: req.params.barcode},function(err,product){
+    Product.findOne({barcode: req.params.barcode},function(err,product){
         if(err){
             res.send(err);
         }
-        else if(product!=null){
+        else if(product){
             res.json({product: product});
         }
-        else{
+        else {
             res.json({success: false, message: "Product Not Found"});
         }
     });

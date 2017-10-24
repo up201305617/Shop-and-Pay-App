@@ -1,5 +1,6 @@
 package com.example.jorge.clientapp.activities;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.jorge.clientapp.R;
+import com.example.jorge.clientapp.entities.Client;
 import com.example.jorge.clientapp.utils.Routes;
 import com.example.jorge.clientapp.utils.Utils;
 
@@ -67,7 +69,22 @@ public class SignUp extends AppCompatActivity {
                 ccYear = etCCYear.getText().toString();
 
                 if(!Utils.checkDate(ccMonth,ccYear)){
-                    Toast.makeText(getBaseContext(), "A data está errada.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Wrong date.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(!etEmail.getText().toString().matches(Utils.EMAIL)){
+                    Toast.makeText(getBaseContext(), "Type a valid e-mail address.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(nif.length()<9){
+                    Toast.makeText(getBaseContext(), "NIF is a 9 digit number.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(ccNumber.length()<16){
+                    Toast.makeText(getBaseContext(), "Credit Card number has 16 digits.",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -81,7 +98,7 @@ public class SignUp extends AppCompatActivity {
                 ccValidity = Utils.buildDate(ccMonth,ccYear);
 
                 HttpAsyncTask post = new HttpAsyncTask();
-                post.execute(Routes.SignUpRouteEmulator, name,address,nif,email,password,ccType,ccNumber, ccValidity);
+                post.execute(Routes.SignUpRoute, name,address,nif,email,password,ccType,ccNumber, ccValidity);
                 //post.execute("http://10.0.2.2:3000/api/user", name,address,nif,email,password);
             }
         });
@@ -127,7 +144,21 @@ public class SignUp extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-
+            Intent intent;
+            Client c = new Client();
+            boolean contains = result.matches(".*\\btrue\\b.*");
+            if(contains){
+                c.setEmail(email);
+                c.setName(name);
+                c.setAddress(address);
+                intent = new Intent(SignUp.this, MainScreen.class);
+                intent.putExtra("Logged",c);
+                startActivity(intent);
+                finish();
+            }
+            else {
+                return;
+            }
         }
     }
 }
