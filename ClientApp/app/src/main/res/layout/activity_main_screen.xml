@@ -43,5 +43,21 @@
             android:elevation="0dp"
             android:padding="0dp"
             android:text="Scan Bar Code" />
+
+        <TextView
+            android:id="@+id/tvItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="TextView"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/bShopping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_green_dark"
+            android:text="SHOPPING LIST" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

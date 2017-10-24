@@ -25,15 +25,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainScreen extends AppCompatActivity {
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
-    TextView tvWelcome;
-    Button bScan;
+    TextView tvWelcome, items;
+    Button bScan, bShopping;
     static Client c;
 
     @Override
@@ -47,6 +46,8 @@ public class MainScreen extends AppCompatActivity {
         tvWelcome = (TextView) findViewById(R.id.tvWelcome);
         tvWelcome.setText("Welcome back "+c.getName()+".");
         bScan = (Button) findViewById(R.id.scan);
+        bShopping = (Button) findViewById(R.id.bShopping);
+        items = (TextView) findViewById(R.id.tvItems);
 
         bScan.setOnClickListener(new View.OnClickListener() {
 
@@ -55,6 +56,29 @@ public class MainScreen extends AppCompatActivity {
                 scan(false);
             }
         });
+
+        bShopping.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainScreen.this, ShopList.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(c.getShopList().size() == 1){
+            items.setText("You have "+c.getShopList().size()+" product on your shopping list.");
+        }
+        else if(c.getShopList().size() == 0){
+            items.setText("Your shopping list is empty.");
+        }
+        else{
+            items.setText("You have "+c.getShopList().size()+" products on your shopping list.");
+        }
     }
 
     public void scan(boolean qrcode) {

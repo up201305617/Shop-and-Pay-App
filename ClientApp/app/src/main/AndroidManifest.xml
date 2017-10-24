@@ -19,10 +19,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.SignUp" />
-        <activity android:name=".activities.ProductDetails"
-            android:parentActivityName=".activities.MainScreen"
-            android:label="Detalhes do Produto"/>
-        <activity android:name=".activities.MainScreen"></activity>
+        <activity
+            android:name=".activities.ProductDetails"
+            android:label="Detalhes do Produto"
+            android:parentActivityName=".activities.MainScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.jorge.clientapp.activities.MainScreen" />
+        </activity>
+        <activity android:name=".activities.MainScreen" />
+        <activity android:name=".activities.ShopList"></activity>
     </application>
 
 </manifest>
