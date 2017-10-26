@@ -2,10 +2,13 @@ package com.example.jorge.clientapp.utils;
 
 import android.util.Log;
 
+import com.example.jorge.clientapp.entities.Product;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -68,4 +71,24 @@ public class Utils {
     }
 
     public static final String EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+    public static final String buildShopListJSON(String email, ArrayList<Product> list)
+    {
+        if(list.size()==0){
+            return null;
+        }
+        else {
+            String json = "{\"email\":\""+email+"\",\"" ;
+            if(list.size()==1){
+                json+="products\":"+"["+"{\"maker\":\""+list.get(0).getMaker()+"\",\""+
+                        "model\":\""+list.get(0).getModel()+"\",\"" +
+                        "price\":\""+list.get(0).getPrice()+"\""+"}"+"]"+"}";
+
+            }
+            else{
+
+            }
+            return json;
+        }
+    }
 }

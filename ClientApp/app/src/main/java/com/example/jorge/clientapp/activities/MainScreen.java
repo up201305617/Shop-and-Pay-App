@@ -118,7 +118,7 @@ public class MainScreen extends AppCompatActivity {
                 }
                 String format = data.getStringExtra("SCAN_RESULT_FORMAT");
                 HttpAsyncTask get = new HttpAsyncTask();
-                get.execute(Routes.GetProductByBarCode+contents);
+                get.execute(Routes.GetProductByBarCodeFEUP+contents);
             }
         }
     }

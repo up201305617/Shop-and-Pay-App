@@ -98,7 +98,8 @@ public class SignUp extends AppCompatActivity {
                 ccValidity = Utils.buildDate(ccMonth,ccYear);
 
                 HttpAsyncTask post = new HttpAsyncTask();
-                post.execute(Routes.SignUpRoute, name,address,nif,email,password,ccType,ccNumber, ccValidity);
+                post.execute(Routes.SignUpRouteFEUP, name,address,nif,email,password,ccType,ccNumber, ccValidity);
+                //post.execute(Routes.SignUpRoute, name,address,nif,email,password,ccType,ccNumber, ccValidity);
                 //post.execute("http://10.0.2.2:3000/api/user", name,address,nif,email,password);
             }
         });

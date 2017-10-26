@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.jorge.clientapp.R;
+import com.example.jorge.clientapp.utils.Utils;
 
 public class ShopList extends AppCompatActivity {
 
@@ -33,11 +35,14 @@ public class ShopList extends AppCompatActivity {
             b.setScaleX(0.5f);
             b.setScaleY(0.5f);
             final LinearLayout l = new LinearLayout(this);
+            l.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             l.setOrientation(LinearLayout.HORIZONTAL);
             tv.setText(MainScreen.c.getShopList().get(i).getName()+" "+MainScreen.c.getShopList().get(i).getPrice());
             price+=Float.parseFloat(MainScreen.c.getShopList().get(i).getPrice());
             tv.setTextColor(Color.BLACK);
-            tv.setTextSize(12);
+            tv.setTextSize(18);
+            //tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            //tv.getLayoutParams().width = (int)(ViewGroup.LayoutParams.MATCH_PARENT * 0.7f);
             l.addView(tv);
             l.addView(b);
             b.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +60,19 @@ public class ShopList extends AppCompatActivity {
         TextView totalPrice = new TextView(this);
         totalPrice.setText("Total = "+price+"€");
         totalPrice.setTextColor(Color.BLACK);
-        totalPrice.setTextSize(12);
+        totalPrice.setTextSize(18);
         list.addView(totalPrice);
+        Button buy = new Button(this);
+        buy.setText("BUY");
+        buy.setTextColor(Color.BLACK);
+        buy.setBackgroundColor(Color.GREEN);
+        buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String json = Utils.buildShopListJSON(MainScreen.c.getEmail(),MainScreen.c.getShopList());
+                Log.i("SHOPLISTjson",json);
+            }
+        });
+        list.addView(buy);
     }
 }
