@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var validators = require('mongoose-validators');
 
 var ShopListSchema = new Schema({
 

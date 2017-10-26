@@ -78,15 +78,27 @@ public class Utils {
             return null;
         }
         else {
+            int size = list.size();
             String json = "{\"email\":\""+email+"\",\"" ;
             if(list.size()==1){
                 json+="products\":"+"["+"{\"maker\":\""+list.get(0).getMaker()+"\",\""+
                         "model\":\""+list.get(0).getModel()+"\",\"" +
                         "price\":\""+list.get(0).getPrice()+"\""+"}"+"]"+"}";
-
             }
             else{
-
+                json+="products\":"+"[";
+                for(int i = 0; i<list.size();i++){
+                    if(i == size-1){
+                        json+="{\"maker\":\""+list.get(0).getMaker()+"\",\""+
+                                "model\":\""+list.get(0).getModel()+"\",\"" +
+                                "price\":\""+list.get(0).getPrice()+"\""+"}"+"]"+"}";
+                    }
+                    else {
+                        json+="{\"maker\":\""+list.get(0).getMaker()+"\",\""+
+                                "model\":\""+list.get(0).getModel()+"\",\"" +
+                                "price\":\""+list.get(0).getPrice()+"\""+"}"+",";
+                    }
+                }
             }
             return json;
         }

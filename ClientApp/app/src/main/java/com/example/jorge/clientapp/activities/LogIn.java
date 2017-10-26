@@ -48,6 +48,11 @@ public class LogIn extends AppCompatActivity {
 
                 if(email.length() == 0 || password.length() == 0){
                     Toast.makeText(getBaseContext(), "Todos os campos devem ser preenchidos.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if(!etEmail.getText().toString().matches(Utils.EMAIL)){
+                    Toast.makeText(getBaseContext(), "Type a valid e-mail address.",Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 else{
                     HttpAsyncTask post = new HttpAsyncTask();

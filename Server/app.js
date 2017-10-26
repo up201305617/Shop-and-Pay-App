@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var userRoutes = require('./routes/UserRoutes');
 var productRoutes = require('./routes/ProductRoutes');
+var listRoutes = require('./routes/ListRoutes');
 var Product = require("./models/Product");
 var app = express();
 var mongoose = require('mongoose');
@@ -29,6 +30,7 @@ app.use('/users', users);
 
 app.use('/api', userRoutes);
 app.use('/api', productRoutes);
+app.use('/api', listRoutes);
 
 var MongoDB = mongoose.connect('mongodb://localhost:27017/CMOV1',{ useMongoClient: true });
 MongoDB.on('error', function(err) { console.log(err.message); });
@@ -45,7 +47,23 @@ var product = new Product({
   barcode: "61234567890"
 });
 
+var computer = new Product({
+  price: "700",
+  name: "Computador",
+  model: "ideapad",
+  maker: "lenovo",
+  category: "electronics",
+  barcode: "12853478357"
+});
+
 /*product.save(function(err){
+  console.log("Saved");
+  if(err){
+    console.log(err);
+  }
+});*/
+
+/*computer.save(function(err){
   console.log("Saved");
   if(err){
     console.log(err);
