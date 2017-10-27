@@ -1,7 +1,5 @@
 package com.example.jorge.clientapp.utils;
 
-import java.security.PublicKey;
-
 /**
  * Created by Jorge on 19/10/2017.
  */

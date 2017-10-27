@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.jorge.clientapp.R;
 import com.example.jorge.clientapp.entities.Client;
+import com.example.jorge.clientapp.utils.Keys;
 import com.example.jorge.clientapp.utils.Routes;
 import com.example.jorge.clientapp.utils.Utils;
 
@@ -22,9 +24,14 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
 
 public class SignUp extends AppCompatActivity {
 
@@ -97,9 +104,20 @@ public class SignUp extends AppCompatActivity {
 
                 ccValidity = Utils.buildDate(ccMonth,ccYear);
 
+                Keys k = new Keys();
+                k.generateKeys();
+                byte [] data = k.getPub().getEncoded();
+                Log.i("ENCODED",data+"");
+                byte [] encode = Base64.encode(k.getPub().toString().getBytes(), Base64.DEFAULT);
+                Log.i("ENCODED",encode+"");
+
+                //String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+
+                Utils.savePrivateKey(k.getPri(),getFilesDir()+"");
+
                 HttpAsyncTask post = new HttpAsyncTask();
-                post.execute(Routes.SignUpRouteFEUP, name,address,nif,email,password,ccType,ccNumber, ccValidity);
-                //post.execute(Routes.SignUpRoute, name,address,nif,email,password,ccType,ccNumber, ccValidity);
+                //post.execute(Routes.SignUpRouteFEUP, name,address,nif,email,password,ccType,ccNumber, ccValidity, base64);
+                post.execute(Routes.SignUpRoute, name,address,nif,email,password,ccType,ccNumber, ccValidity,k.getPub()+"");
                 //post.execute("http://10.0.2.2:3000/api/user", name,address,nif,email,password);
             }
         });
@@ -119,7 +137,7 @@ public class SignUp extends AppCompatActivity {
                     urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
                     urlConnection.setRequestMethod("POST");
                     urlConnection.connect();
-                    String stringJson = Utils.buildUserJSON(params[1],params[2],params[3],params[4],params[5],params[6],params[7],params[8]);
+                    String stringJson = Utils.buildUserJSON(params[1],params[2],params[3],params[4],params[5],params[6],params[7],params[8],params[9]);
                     Log.i("String",stringJson);
                     OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
                     writer.write(stringJson);

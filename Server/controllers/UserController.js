@@ -10,6 +10,8 @@ exports.registerUser = function(req,res){
     user.cctype = req.body.cctype;
     user.ccnumber = req.body.ccnumber;
     user.ccvalidity = req.body.ccvalidity;
+    user.public_key = req.body.public_key;
+    console.log(req.body.public_key);
     user.save(function(err) {
         if (err) {
             res.json({success:false});

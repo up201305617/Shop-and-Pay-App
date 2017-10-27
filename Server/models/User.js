@@ -28,6 +28,9 @@ var UserSchema = new Schema({
         type: String,
         required: 'The User must have a password.'
     },
+    public_key:{
+        type: String
+    },
     cctype:{
         type: String,
         required: true

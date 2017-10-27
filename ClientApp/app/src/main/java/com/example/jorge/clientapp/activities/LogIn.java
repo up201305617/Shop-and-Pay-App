@@ -57,8 +57,8 @@ public class LogIn extends AppCompatActivity {
                 else{
                     HttpAsyncTask post = new HttpAsyncTask();
                     //post.execute(Routes.LogInRouteEmulator, email,password);
-                    //post.execute(Routes.LogInRoute,email,password);
-                    post.execute(Routes.LogInRouteFEUP,email,password);
+                    post.execute(Routes.LogInRoute,email,password);
+                    //post.execute(Routes.LogInRouteFEUP,email,password);
                     //post.execute("http://10.0.2.2:3000/api/login", email,password);
                 }
             }

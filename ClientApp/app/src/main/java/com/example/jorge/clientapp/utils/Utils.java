@@ -5,12 +5,23 @@ import android.util.Log;
 import com.example.jorge.clientapp.entities.Product;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import static android.R.attr.path;
 
 /**
  * Created by Jorge on 18/10/2017.
@@ -29,12 +40,13 @@ public class Utils {
         return result;
     }
 
-    public static String buildUserJSON(String name, String address, String NIF, String email, String password, String cctype, String ccnumber, String ccvalidity){
+    public static String buildUserJSON(String name, String address, String NIF, String email, String password, String cctype, String ccnumber, String ccvalidity, String public_key){
         String json = "{\"name\":\""+name+"\",\"" +
                 "address\":\""+address+"\",\"" +
                 "nif\":\""+NIF+"\",\"" +
                 "email\":\""+email+"\",\"" +
                 "password\":\""+password+"\",\"" +
+                "public_key\":\""+public_key+"\",\"" +
                 "cctype\":\""+cctype+"\",\""+
                 "ccnumber\":\""+ccnumber+"\",\""+
                 "ccvalidity\":\""+ccvalidity+"\""+"}";
@@ -102,5 +114,34 @@ public class Utils {
             }
             return json;
         }
+    }
+
+    public static void savePrivateKey(PrivateKey key, String path){
+        PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(key.getEncoded());
+        FileOutputStream  fos = null;
+        try {
+            fos = new FileOutputStream(path + "/private.key");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.write(pkcs8EncodedKeySpec.getEncoded());
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static PrivateKey loadPrivateKey(String path, String algorithm) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        File filePrivateKey = new File(path + "/private.key");
+        FileInputStream fis = new FileInputStream(path + "/private.key");
+        byte[] encodedPrivateKey = new byte[(int) filePrivateKey.length()];
+        fis.read(encodedPrivateKey);
+        fis.close();
+        KeyFactory keyFactory = KeyFactory.getInstance(algorithm);
+        PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(
+                encodedPrivateKey);
+        PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
+        return  privateKey;
     }
 }

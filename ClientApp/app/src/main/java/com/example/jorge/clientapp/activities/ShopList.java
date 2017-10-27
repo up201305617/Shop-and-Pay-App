@@ -52,7 +52,7 @@ public class ShopList extends AppCompatActivity {
             final LinearLayout l = new LinearLayout(this);
             l.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             l.setOrientation(LinearLayout.HORIZONTAL);
-            tv.setText(MainScreen.c.getShopList().get(i).getName()+" "+MainScreen.c.getShopList().get(i).getPrice());
+            tv.setText(MainScreen.c.getShopList().get(i).getName()+" "+MainScreen.c.getShopList().get(i).getPrice()+"€"+" ");
             price+=Float.parseFloat(MainScreen.c.getShopList().get(i).getPrice());
             tv.setTextColor(Color.BLACK);
             tv.setTextSize(18);
@@ -85,7 +85,7 @@ public class ShopList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HttpAsyncTask post = new HttpAsyncTask();
-                post.execute(Routes.PostShopListFEUP);
+                post.execute(Routes.PostShopList);
             }
         });
         list.addView(buy);
