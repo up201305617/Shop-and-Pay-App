@@ -6,7 +6,6 @@ var ShopListSchema = new Schema({
 
     email: {
         type: String,
-        unique: true,
         required: 'The User must have an email.',
         validate: validators.isEmail()
     },
@@ -25,7 +24,11 @@ var ShopListSchema = new Schema({
                 required: 'A products must have a price.'
             }
         }
-    ]
+    ],
+    UUID:{
+        type: String,
+        unique: true
+    }
 });
 
 module.exports = mongoose.model('ShopList', ShopListSchema, 'ShopList');

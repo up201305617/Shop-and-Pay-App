@@ -12,9 +12,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.Signature;
+import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
@@ -40,13 +43,12 @@ public class Utils {
         return result;
     }
 
-    public static String buildUserJSON(String name, String address, String NIF, String email, String password, String cctype, String ccnumber, String ccvalidity, String public_key){
+    public static String buildUserJSON(String name, String address, String NIF, String email, String password, String cctype, String ccnumber, String ccvalidity){
         String json = "{\"name\":\""+name+"\",\"" +
                 "address\":\""+address+"\",\"" +
                 "nif\":\""+NIF+"\",\"" +
                 "email\":\""+email+"\",\"" +
                 "password\":\""+password+"\",\"" +
-                "public_key\":\""+public_key+"\",\"" +
                 "cctype\":\""+cctype+"\",\""+
                 "ccnumber\":\""+ccnumber+"\",\""+
                 "ccvalidity\":\""+ccvalidity+"\""+"}";
@@ -143,5 +145,45 @@ public class Utils {
                 encodedPrivateKey);
         PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
         return  privateKey;
+    }
+
+    public static String buildProductsJSON(ArrayList<Product> list){
+        if(list.size()==0){
+            return null;
+        }
+        else {
+            int size = list.size();
+            String json = "";
+            if(list.size()==1){
+                json+="["+"{\"maker\":\""+list.get(0).getMaker()+"\",\""+
+                        "model\":\""+list.get(0).getModel()+"\",\"" +
+                        "price\":\""+list.get(0).getPrice()+"\""+"}"+"]";
+            }
+            else{
+                json+="[";
+                for(int i = 0; i<list.size();i++){
+                    if(i == size-1){
+                        json+="{\"maker\":\""+list.get(0).getMaker()+"\",\""+
+                                "model\":\""+list.get(0).getModel()+"\",\"" +
+                                "price\":\""+list.get(0).getPrice()+"\""+"}"+"]";
+                    }
+                    else {
+                        json+="{\"maker\":\""+list.get(0).getMaker()+"\",\""+
+                                "model\":\""+list.get(0).getModel()+"\",\"" +
+                                "price\":\""+list.get(0).getPrice()+"\""+"}"+",";
+                    }
+                }
+            }
+            return json;
+        }
+    }
+
+    public static byte[] signShopList(PrivateKey pri, byte[] input) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+        byte[] output;
+        Signature sg = Signature.getInstance("SHA1WithRSA");
+        sg.initSign(pri);
+        sg.update(input);
+        output = sg.sign();
+        return output;
     }
 }

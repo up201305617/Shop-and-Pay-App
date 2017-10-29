@@ -116,27 +116,30 @@ public class LogIn extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Intent intent;
             Client c = new Client();
-            boolean contains = result.matches(".*\\btrue\\b.*");
 
             if(result.equals("")) {
                 Toast.makeText(getBaseContext(), "Not Connected to Server.", Toast.LENGTH_SHORT).show();
                 return;
             }
+            else {
+                boolean contains = result.matches(".*\\btrue\\b.*");
+                if (contains){
+                    String name = result.replace("\"", "").replace("}", "").replace(",success:true", "");
+                    name = name.substring(name.indexOf("name:") + 5, name.length());
+                    c.setEmail(email);
+                    c.setName(name);
+                    intent = new Intent(LogIn.this, MainScreen.class);
+                    intent.putExtra("Logged",c);
+                    startActivity(intent);
+                    finish();
+                }
+                else{
+                    Toast.makeText(getBaseContext(),"Wrong Credentials",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
 
-            if (contains){
-                String name = result.replace("\"", "").replace("}", "").replace(",success:true", "");
-                name = name.substring(name.indexOf("name:") + 5, name.length());
-                c.setEmail(email);
-                c.setName(name);
-                intent = new Intent(LogIn.this, MainScreen.class);
-                intent.putExtra("Logged",c);
-                startActivity(intent);
-                finish();
-            }
-            else{
-                Toast.makeText(getBaseContext(),"Wrong Credentials",Toast.LENGTH_SHORT).show();
-                return;
-            }
+
         }
     }
 }

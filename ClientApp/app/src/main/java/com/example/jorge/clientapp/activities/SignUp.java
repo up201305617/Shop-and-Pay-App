@@ -104,20 +104,23 @@ public class SignUp extends AppCompatActivity {
 
                 ccValidity = Utils.buildDate(ccMonth,ccYear);
 
-                Keys k = new Keys();
-                k.generateKeys();
-                byte [] data = k.getPub().getEncoded();
-                Log.i("ENCODED",data+"");
-                byte [] encode = Base64.encode(k.getPub().toString().getBytes(), Base64.DEFAULT);
-                Log.i("ENCODED",encode+"");
+                //Keys k = new Keys();
+                //k.generateKeys();
+                //byte [] data = k.getPub().getEncoded();
+                //Log.i("ENCODED",data+"");
+                //byte [] encode = Base64.encode(k.getPub().toString().getBytes(), Base64.DEFAULT);
+                //Log.i("ENCODED",encode+"");
+                //byte[] pKbytes = Base64.encode(k.getPub().getEncoded(), 0);
+                //String pK = new String(pKbytes);
 
+                //String pubKey = "-----BEGIN PUBLIC KEY-----\n" + pK + "-----END PUBLIC KEY-----\n";
                 //String base64 = Base64.encodeToString(data, Base64.DEFAULT);
-
-                Utils.savePrivateKey(k.getPri(),getFilesDir()+"");
+                //Log.i("ENCODED",pKbytes+"");
+                //Utils.savePrivateKey(k.getPri(),getFilesDir()+"");
 
                 HttpAsyncTask post = new HttpAsyncTask();
                 //post.execute(Routes.SignUpRouteFEUP, name,address,nif,email,password,ccType,ccNumber, ccValidity, base64);
-                post.execute(Routes.SignUpRoute, name,address,nif,email,password,ccType,ccNumber, ccValidity,k.getPub()+"");
+                post.execute(Routes.SignUpRoute, name,address,nif,email,password,ccType,ccNumber, ccValidity);
                 //post.execute("http://10.0.2.2:3000/api/user", name,address,nif,email,password);
             }
         });
@@ -137,7 +140,7 @@ public class SignUp extends AppCompatActivity {
                     urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
                     urlConnection.setRequestMethod("POST");
                     urlConnection.connect();
-                    String stringJson = Utils.buildUserJSON(params[1],params[2],params[3],params[4],params[5],params[6],params[7],params[8],params[9]);
+                    String stringJson = Utils.buildUserJSON(params[1],params[2],params[3],params[4],params[5],params[6],params[7],params[8]);
                     Log.i("String",stringJson);
                     OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
                     writer.write(stringJson);

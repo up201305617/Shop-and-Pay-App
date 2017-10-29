@@ -4,5 +4,7 @@ var shopListController = require("../controllers/ShopListController");
 
 router.route('/shoplist').post(shopListController.insertShopList);
 router.route('/shoplists').get(shopListController.getAllLists);
+router.route('/shoplists/:email').get(shopListController.getListsByEmail);
+router.route('/shoplists').delete(shopListController.deleteAllLists);
 
 module.exports = router;

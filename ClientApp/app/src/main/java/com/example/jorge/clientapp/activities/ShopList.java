@@ -29,6 +29,11 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.SignatureException;
+import java.security.spec.InvalidKeySpecException;
 
 public class ShopList extends AppCompatActivity {
 
@@ -105,6 +110,9 @@ public class ShopList extends AppCompatActivity {
                     urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
                     urlConnection.setRequestMethod("POST");
                     urlConnection.connect();
+                    String prodArray = Utils.buildProductsJSON(MainScreen.c.getShopList());
+                    //PrivateKey priKey = Utils.loadPrivateKey(getFilesDir()+"","RSA");
+                    //byte [] sig = Utils.signShopList(priKey,prodArray.getBytes("UTF-8"));
                     String stringJson = Utils.buildShopListJSON(MainScreen.c.getEmail(),MainScreen.c.getShopList());
                     Log.i("PEDIDO",stringJson);
                     OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
@@ -131,13 +139,21 @@ public class ShopList extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            boolean contains = result.matches(".*\\btrue\\b.*");
-            if(contains){
-                Toast.makeText(getBaseContext(),"Inserted",Toast.LENGTH_SHORT).show();
-                finish();
+            if(result.equals(null)) {
+                return;
             }
             else {
-                return;
+                Intent intent;
+                boolean contains = result.matches(".*\\bfalse\\b.*");
+                if(contains){
+                    return;
+                }
+                else {
+                    intent = new Intent(ShopList.this, QRCodeScreen.class);
+                    intent.putExtra("UUID",result.replace("{","").replace("}","").replace(":","").replace("UUID","").replace("\"",""));
+                    startActivity(intent);
+                    finish();
+                }
             }
         }
     }

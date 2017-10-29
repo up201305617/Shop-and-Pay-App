@@ -28,7 +28,8 @@
                 android:value="com.example.jorge.clientapp.activities.MainScreen" />
         </activity>
         <activity android:name=".activities.MainScreen" />
-        <activity android:name=".activities.ShopList"></activity>
+        <activity android:name=".activities.ShopList" />
+        <activity android:name=".activities.QRCodeScreen"></activity>
     </application>
 
 </manifest>
