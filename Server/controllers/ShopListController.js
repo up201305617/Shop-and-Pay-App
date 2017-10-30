@@ -59,7 +59,10 @@ exports.getListsByEmail = function(req,res){
             res.send(err);
         }
         else if(lists.length>0){
-            console.log(lists[0].products);
+            var pro="";
+            for(var i=0; i<lists.length;i++){
+                pro += lists[0].products+"\n";
+            }
             res.json({lists: lists});
         }
         else {
@@ -75,6 +78,20 @@ exports.deleteAllLists = function(req,res){
         }
         else{
             res.json({success: true, message: "All Products are removed!"});
+        }
+    });
+};
+
+exports.getListByUUID = function(req,res){
+    ShopList.findOne({UUID: req.params.UUID},function(err,list){
+        if(err){
+            res.send(err);
+        }
+        else if(list){
+            res.json({list: list.products});
+        }
+        else {
+            res.json({success: false, message: "List Not Found."});
         }
     });
 };
