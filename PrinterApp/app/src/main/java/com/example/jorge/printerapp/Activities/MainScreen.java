@@ -6,12 +6,25 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.jorge.printerapp.R;
+import com.example.jorge.printerapp.Utils.Routes;
+import com.example.jorge.printerapp.Utils.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MainScreen extends AppCompatActivity {
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
@@ -57,5 +70,55 @@ public class MainScreen extends AppCompatActivity {
         });
         downloadDialog.setNegativeButton(buttonNo, null);
         return downloadDialog.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                String contents = data.getStringExtra("SCAN_RESULT");
+                if(contents!=null&&contents.length()>0){
+                    contents = contents.substring(0, contents.length() - 1);
+                }
+                String format = data.getStringExtra("SCAN_RESULT_FORMAT");
+                HttpAsyncTask get = new HttpAsyncTask();
+                get.execute(Routes.GetShopListByUUID+contents);
+            }
+        }
+    }
+
+    private class HttpAsyncTask extends AsyncTask<String, String, String> {
+        HttpURLConnection urlConnection;
+        @Override
+        protected String doInBackground(String... params) {
+            JSONObject response = null;
+            try {
+                URL url = new URL(params[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setDoInput(true);
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.connect();
+                InputStream input = urlConnection.getInputStream();
+                response = new JSONObject(Utils.convertInputStreamToString(input).toString());
+                Log.i("RESPOSTA",response.toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                urlConnection.disconnect();
+            }
+            if(response!=null)
+                return response.toString();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+        }
     }
 }
