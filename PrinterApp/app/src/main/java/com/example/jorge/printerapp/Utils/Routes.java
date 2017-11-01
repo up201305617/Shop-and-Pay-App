@@ -5,4 +5,5 @@ package com.example.jorge.printerapp.Utils;
  */
 
 public class Routes {
+
 }
