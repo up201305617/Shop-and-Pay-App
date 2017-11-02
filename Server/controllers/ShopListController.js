@@ -14,8 +14,10 @@ exports.insertShopList = function(req,res){
     }
     else {
         list.email = req.body.email;
+        list.totalPrice = req.body.totalPrice;
         list.products = req.body.products;
         list.UUID = uuidv4();
+        
         list.save(function(err) {
             if (err) {
                 console.log(err);
@@ -88,7 +90,7 @@ exports.getListByUUID = function(req,res){
             res.send(err);
         }
         else if(list){
-            res.json({list: list.products});
+            res.json({price: list.totalPrice, list: list.products});
         }
         else {
             res.json({success: false, message: "List Not Found."});

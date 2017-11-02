@@ -86,7 +86,7 @@ public class Utils {
 
     public static final String EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-    public static final String buildShopListJSON(String email, ArrayList<Product> list)
+    public static final String buildShopListJSON(String email, ArrayList<Product> list,float price)
     {
         if(list.size()==0){
             return null;
@@ -94,6 +94,7 @@ public class Utils {
         else {
             int size = list.size();
             String json = "{\"email\":\""+email+"\",\"" ;
+            json += "totalPrice\":\""+price+"\",\"";
             if(list.size()==1){
                 json+="products\":"+"["+"{\"maker\":\""+list.get(0).getMaker()+"\",\""+
                         "model\":\""+list.get(0).getModel()+"\",\"" +
@@ -103,14 +104,14 @@ public class Utils {
                 json+="products\":"+"[";
                 for(int i = 0; i<list.size();i++){
                     if(i == size-1){
-                        json+="{\"maker\":\""+list.get(0).getMaker()+"\",\""+
-                                "model\":\""+list.get(0).getModel()+"\",\"" +
-                                "price\":\""+list.get(0).getPrice()+"\""+"}"+"]"+"}";
+                        json+="{\"maker\":\""+list.get(i).getMaker()+"\",\""+
+                                "model\":\""+list.get(i).getModel()+"\",\"" +
+                                "price\":\""+list.get(i).getPrice()+"\""+"}"+"]"+"}";
                     }
                     else {
-                        json+="{\"maker\":\""+list.get(0).getMaker()+"\",\""+
-                                "model\":\""+list.get(0).getModel()+"\",\"" +
-                                "price\":\""+list.get(0).getPrice()+"\""+"}"+",";
+                        json+="{\"maker\":\""+list.get(i).getMaker()+"\",\""+
+                                "model\":\""+list.get(i).getModel()+"\",\"" +
+                                "price\":\""+list.get(i).getPrice()+"\""+"}"+",";
                     }
                 }
             }

@@ -117,7 +117,7 @@ public class LogIn extends AppCompatActivity {
             Intent intent;
             Client c = new Client();
 
-            if(result.equals("")) {
+            if(result==null) {
                 Toast.makeText(getBaseContext(), "Not Connected to Server.", Toast.LENGTH_SHORT).show();
                 return;
             }

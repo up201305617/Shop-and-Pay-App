@@ -168,18 +168,25 @@ public class SignUp extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Intent intent;
             Client c = new Client();
-            boolean contains = result.matches(".*\\btrue\\b.*");
-            if(contains){
-                c.setEmail(email);
-                c.setName(name);
-                c.setAddress(address);
-                intent = new Intent(SignUp.this, MainScreen.class);
-                intent.putExtra("Logged",c);
-                startActivity(intent);
-                finish();
-            }
-            else {
+
+            if(result==null) {
+                Toast.makeText(getBaseContext(), "Not Connected to Server.", Toast.LENGTH_SHORT).show();
                 return;
+            }
+            else{
+                boolean contains = result.matches(".*\\btrue\\b.*");
+                if(contains){
+                    c.setEmail(email);
+                    c.setName(name);
+                    c.setAddress(address);
+                    intent = new Intent(SignUp.this, MainScreen.class);
+                    intent.putExtra("Logged",c);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    return;
+                }
             }
         }
     }

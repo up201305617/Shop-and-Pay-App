@@ -1,6 +1,7 @@
 package com.example.jorge.clientapp.activities;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -30,7 +31,9 @@ public class QRCodeScreen extends AppCompatActivity {
         titleTv = (TextView) findViewById(R.id.title);
         Bundle bundle = getIntent().getExtras();
         uuid = (String) bundle.get("UUID");
-        titleTv.setText("Message: \"" + uuid + "\"");
+        titleTv.setTextSize(18);
+        titleTv.setTextColor(Color.BLACK);
+        titleTv.setText("Your purchase has been successful. Present the following QRCode to a printer.");
 
         Thread t = new Thread(new Runnable() {  // do the creation in a new thread to avoid ANR Exception
             public void run() {

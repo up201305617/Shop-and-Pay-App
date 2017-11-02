@@ -38,13 +38,13 @@ import java.security.spec.InvalidKeySpecException;
 public class ShopList extends AppCompatActivity {
 
     LinearLayout list;
-
+    float price=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_list);
         list = (LinearLayout) findViewById(R.id.llShop);
-        float price=0;
+
         for(int i=0; i<MainScreen.c.getShopList().size();i++){
             final int temp = i;
             final TextView tv = new TextView(this);
@@ -113,7 +113,7 @@ public class ShopList extends AppCompatActivity {
                     String prodArray = Utils.buildProductsJSON(MainScreen.c.getShopList());
                     //PrivateKey priKey = Utils.loadPrivateKey(getFilesDir()+"","RSA");
                     //byte [] sig = Utils.signShopList(priKey,prodArray.getBytes("UTF-8"));
-                    String stringJson = Utils.buildShopListJSON(MainScreen.c.getEmail(),MainScreen.c.getShopList());
+                    String stringJson = Utils.buildShopListJSON(MainScreen.c.getEmail(),MainScreen.c.getShopList(),price);
                     Log.i("PEDIDO",stringJson);
                     OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
                     writer.write(stringJson);
@@ -143,6 +143,7 @@ public class ShopList extends AppCompatActivity {
                 return;
             }
             else {
+                MainScreen.c.getShopList().clear();
                 Intent intent;
                 boolean contains = result.matches(".*\\bfalse\\b.*");
                 if(contains){

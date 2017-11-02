@@ -9,6 +9,9 @@ var ShopListSchema = new Schema({
         required: 'The User must have an email.',
         validate: validators.isEmail()
     },
+    totalPrice:{
+        type: String
+    },
     products: [
         {
             maker: {

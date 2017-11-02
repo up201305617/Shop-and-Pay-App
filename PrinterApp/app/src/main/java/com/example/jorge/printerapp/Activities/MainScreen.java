@@ -78,9 +78,10 @@ public class MainScreen extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String contents = data.getStringExtra("SCAN_RESULT");
                 if(contents!=null&&contents.length()>0){
-                    contents = contents.substring(0, contents.length() - 1);
+                    contents = contents.substring(0, contents.length());
                 }
                 String format = data.getStringExtra("SCAN_RESULT_FORMAT");
+                Log.i("Formal",contents);
                 HttpAsyncTask get = new HttpAsyncTask();
                 get.execute(Routes.GetShopListByUUID+contents);
             }
@@ -102,6 +103,10 @@ public class MainScreen extends AppCompatActivity {
                 InputStream input = urlConnection.getInputStream();
                 response = new JSONObject(Utils.convertInputStreamToString(input).toString());
                 Log.i("RESPOSTA",response.toString());
+                JSONObject jsonObj = new JSONObject(response.toString());
+                JSONObject aux = new JSONObject(jsonObj.getJSONArray("list").get(0).toString());
+                Log.i("Vamod", jsonObj.getString("list"));
+                Log.i("Vamod", aux.getString("maker"));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -118,7 +123,22 @@ public class MainScreen extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-
+            if(result == null){
+                return;
+            }
+            else {
+                Intent intent;
+                boolean contains = result.matches(".*\\bfalse\\b.*");
+                if(contains){
+                    return;
+                }
+                else {
+                    intent = new Intent(MainScreen.this, DisplayList.class);
+                    intent.putExtra("List",result);
+                    startActivity(intent);
+                    //finish();
+                }
+            }
         }
     }
 }
