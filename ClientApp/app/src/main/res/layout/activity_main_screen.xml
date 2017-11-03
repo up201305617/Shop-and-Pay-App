@@ -59,5 +59,21 @@
             android:layout_height="wrap_content"
             android:background="@android:color/holo_green_dark"
             android:text="SHOPPING LIST" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="See Your Past Transactions."
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/pastBId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_green_dark"
+            android:text="Past Transactions" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

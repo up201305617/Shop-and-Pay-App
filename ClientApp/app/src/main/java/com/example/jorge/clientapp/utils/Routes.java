@@ -15,4 +15,6 @@ public class Routes {
     public static String GetProductByBarCodeFEUP = "http://172.30.7.223:3000/api/product/";
     public static String PostShopListFEUP = "http://172.30.7.223:3000/api/shoplist/";
     public static String PostShopList = "http://192.168.1.67:3000/api/shoplist";
+    public static String GetPastTransactions = "http://192.168.1.67:3000/api/shoplists/";
+    public static String GetPastTransactionsFEUP = "http://172.30.7.223:3000/api/shoplists/";
 }

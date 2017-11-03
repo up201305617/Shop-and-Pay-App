@@ -2,12 +2,12 @@ var ShopList = require("../models/ShopList");
 var User = require("../models/User");
 var crypto = require('crypto')
 var fs = require('fs')
-var creditCardVerifier = require('../controllers/CreditCardVerifier');
+var utils = require('../controllers/Utils');
 var uuidv4 = require('../node_modules/uuid/v4')
 
 exports.insertShopList = function(req,res){
     var list = new ShopList;
-    var msg = creditCardVerifier.verifyCreditCard(null);
+    var msg = utils.verifyCreditCard(null);
     
     if(msg == "Denied") {
         res.json("Credit Card Denied");
@@ -17,7 +17,11 @@ exports.insertShopList = function(req,res){
         list.totalPrice = req.body.totalPrice;
         list.products = req.body.products;
         list.UUID = uuidv4();
-        
+        var d = new Date();
+        var date = d.getDate()+"-"+utils.getCorrectMonth(d.getMonth())+"-"+d.getFullYear();
+        var time = d.getHours()+":"+d.getMinutes();
+        list.date = date;
+        list.time = time;
         list.save(function(err) {
             if (err) {
                 console.log(err);

@@ -29,7 +29,8 @@
         </activity>
         <activity android:name=".activities.MainScreen" />
         <activity android:name=".activities.ShopList" />
-        <activity android:name=".activities.QRCodeScreen"></activity>
+        <activity android:name=".activities.QRCodeScreen" />
+        <activity android:name=".activities.PastTransactions"></activity>
     </application>
 
 </manifest>

@@ -30,7 +30,7 @@ public class DisplayList extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String list = (String) bundle.get("List");
-        Log.i("seradesta",list);
+
         JSONObject jsonObj = null;
         try {
             jsonObj = new JSONObject(list);

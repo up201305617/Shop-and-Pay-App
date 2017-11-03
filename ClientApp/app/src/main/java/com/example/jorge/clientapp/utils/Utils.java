@@ -31,6 +31,10 @@ import static android.R.attr.path;
  */
 
 public class Utils {
+
+    public static int SHOP_LIST = 0;
+    public static int PAST = 1;
+
     public static String convertInputStreamToString(InputStream input) throws IOException {
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(input));
         String line = "";

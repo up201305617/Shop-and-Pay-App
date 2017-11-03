@@ -30,10 +30,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.example.jorge.clientapp.utils.Utils.PAST;
+
 public class MainScreen extends AppCompatActivity {
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
     TextView tvWelcome, items;
-    Button bScan, bShopping;
+    Button bScan, bShopping, bPast;
     static Client c;
 
     @Override
@@ -49,7 +51,7 @@ public class MainScreen extends AppCompatActivity {
         bScan = (Button) findViewById(R.id.scan);
         bShopping = (Button) findViewById(R.id.bShopping);
         items = (TextView) findViewById(R.id.tvItems);
-
+        bPast = (Button) findViewById(R.id.pastBId);
         bScan.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -64,6 +66,14 @@ public class MainScreen extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainScreen.this, ShopList.class);
                 startActivity(intent);
+            }
+        });
+
+        bPast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HttpAsyncTask get = new HttpAsyncTask(Utils.PAST);
+                get.execute(Routes.GetPastTransactions+c.getEmail());
             }
         });
     }
@@ -117,7 +127,7 @@ public class MainScreen extends AppCompatActivity {
                     contents = contents.substring(0, contents.length() - 1);
                 }
                 String format = data.getStringExtra("SCAN_RESULT_FORMAT");
-                HttpAsyncTask get = new HttpAsyncTask();
+                HttpAsyncTask get = new HttpAsyncTask(Utils.SHOP_LIST);
                 get.execute(Routes.GetProductByBarCode+contents);
             }
         }
@@ -125,6 +135,10 @@ public class MainScreen extends AppCompatActivity {
 
     private class HttpAsyncTask extends AsyncTask<String, String, String> {
         HttpURLConnection urlConnection;
+        int state;
+        public HttpAsyncTask(int s){
+            state = s;
+        }
         @Override
         protected String doInBackground(String... params) {
             JSONObject response = null;
@@ -156,27 +170,50 @@ public class MainScreen extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Intent intent;
-            Product p = new Product();
-            boolean contains = result.matches(".*\\bfalse\\b.*");
-            if(!contains){
-                Log.i("ENTREI",1+"");
-                Log.i("SPLIT",result);
-                intent = new Intent(MainScreen.this, ProductDetails.class);
-                String r = result.replace("[","").replace("]","").replace("{","").replace("}","").replace(":"," ").replace(","," ").replace("\"","");
-                Log.i("SUBSTITUICAO",r);
-                String[] split = r.split(" ");
-                p.setCategory(split[2]);
-                p.setModel(split[4]);
-                p.setPrice(split[6]);
-                p.setMaker(split[10]);
-                p.setName(split[12]);
-                intent.putExtra("Product",p);
-                startActivity(intent);
+            switch (state){
+                case 0:
+                    Product p = new Product();
+                    boolean contains = result.matches(".*\\bfalse\\b.*");
+                    if(!contains){
+                        Log.i("ENTREI",1+"");
+                        Log.i("SPLIT",result);
+                        intent = new Intent(MainScreen.this, ProductDetails.class);
+                        String r = result.replace("[","").replace("]","").replace("{","").replace("}","").replace(":"," ").replace(","," ").replace("\"","");
+                        Log.i("SUBSTITUICAO",r);
+                        String[] split = r.split(" ");
+                        p.setCategory(split[2]);
+                        p.setModel(split[4]);
+                        p.setPrice(split[6]);
+                        p.setMaker(split[10]);
+                        p.setName(split[12]);
+                        intent.putExtra("Product",p);
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(getBaseContext(),"Product Not Found",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    break;
+                case 1:
+                    if(result==null) {
+                        Toast.makeText(getBaseContext(), "Not Connected to Server.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else {
+                        boolean contains_1 = result.matches(".*\\bfalse\\b.*");
+                        if(!contains_1) {
+                            intent = new Intent(MainScreen.this, PastTransactions.class);
+                            intent.putExtra("Past",result);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(getBaseContext(),"Shop Lists Nof Found.",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    break;
             }
-            else {
-                Toast.makeText(getBaseContext(),"Product Not Found",Toast.LENGTH_SHORT).show();
-                return;
-            }
+
         }
     }
 }

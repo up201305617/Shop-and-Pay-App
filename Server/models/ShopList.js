@@ -12,6 +12,12 @@ var ShopListSchema = new Schema({
     totalPrice:{
         type: String
     },
+    date:{
+        type: String
+    },
+    time: {
+        type: String
+    },
     products: [
         {
             maker: {
