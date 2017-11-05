@@ -42,7 +42,8 @@
             android:background="@android:color/holo_green_dark"
             android:elevation="0dp"
             android:padding="0dp"
-            android:text="Scan Bar Code" />
+            android:text="Scan Bar Code"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvItems"
@@ -58,7 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/holo_green_dark"
-            android:text="SHOPPING LIST" />
+            android:text="SHOPPING LIST"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView5"
@@ -74,6 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/holo_green_dark"
-            android:text="Past Transactions" />
+            android:text="Past Transactions"
+            android:textSize="18sp" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Dados Pessoais"
+                android:text="Personal Info"
                 android:textColor="@android:color/black"
                 android:textSize="30sp" />
 
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Nome"
+                android:hint="Name"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Morada"
+                android:hint="Address"
                 android:inputType="textPostalAddress" />
 
             <EditText
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Dados Cartão de Crédito"
+                android:text="Credit Card Info"
                 android:textColor="@android:color/black"
                 android:textSize="30sp" />
 
@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="Tipo "
+                android:text="Type"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
@@ -115,9 +115,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Número Cartão de Crédito"
-                android:maxLength="16"
-                android:inputType="number" />
+                android:hint="Number"
+                android:inputType="number"
+                android:maxLength="16" />
 
             <LinearLayout
                 android:layout_width="230dp"
@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.81"
-                    android:text=" Validade:"
+                    android:text="Validity:"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
 
@@ -162,7 +162,8 @@
                 android:id="@+id/register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Registar" />
+                android:text="Sign Up"
+                android:textSize="18sp" />
 
         </LinearLayout>
     </ScrollView>

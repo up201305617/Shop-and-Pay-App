@@ -172,26 +172,32 @@ public class MainScreen extends AppCompatActivity {
             Intent intent;
             switch (state){
                 case 0:
-                    Product p = new Product();
-                    boolean contains = result.matches(".*\\bfalse\\b.*");
-                    if(!contains){
-                        Log.i("ENTREI",1+"");
-                        Log.i("SPLIT",result);
-                        intent = new Intent(MainScreen.this, ProductDetails.class);
-                        String r = result.replace("[","").replace("]","").replace("{","").replace("}","").replace(":"," ").replace(","," ").replace("\"","");
-                        Log.i("SUBSTITUICAO",r);
-                        String[] split = r.split(" ");
-                        p.setCategory(split[2]);
-                        p.setModel(split[4]);
-                        p.setPrice(split[6]);
-                        p.setMaker(split[10]);
-                        p.setName(split[12]);
-                        intent.putExtra("Product",p);
-                        startActivity(intent);
-                    }
-                    else {
-                        Toast.makeText(getBaseContext(),"Product Not Found",Toast.LENGTH_SHORT).show();
+                    if(result==null) {
+                        Toast.makeText(getBaseContext(), "Not Connected to Server.", Toast.LENGTH_SHORT).show();
                         return;
+                    }
+                    else{
+                        Product p = new Product();
+                        boolean contains = result.matches(".*\\bfalse\\b.*");
+                        if(!contains){
+                            Log.i("ENTREI",1+"");
+                            Log.i("SPLIT",result);
+                            intent = new Intent(MainScreen.this, ProductDetails.class);
+                            String r = result.replace("[","").replace("]","").replace("{","").replace("}","").replace(":"," ").replace(","," ").replace("\"","");
+                            Log.i("SUBSTITUICAO",r);
+                            String[] split = r.split(" ");
+                            p.setCategory(split[2]);
+                            p.setModel(split[4]);
+                            p.setPrice(split[6]);
+                            p.setMaker(split[10]);
+                            p.setName(split[12]);
+                            intent.putExtra("Product",p);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(getBaseContext(),"Product Not Found",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                     }
                     break;
                 case 1:
