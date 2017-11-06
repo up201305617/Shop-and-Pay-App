@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,44 +40,74 @@ import java.security.spec.InvalidKeySpecException;
 public class ShopList extends AppCompatActivity {
 
     LinearLayout list;
+    TableLayout tableLayout;
+
     float price=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_list);
         list = (LinearLayout) findViewById(R.id.llShop);
+        tableLayout = (TableLayout) findViewById(R.id.slTable);
 
         for(int i=0; i<MainScreen.c.getShopList().size();i++){
             final int temp = i;
             final TextView tv = new TextView(this);
+            final TextView makerTv = new TextView(this);
+            final TextView modelTv = new TextView(this);
+            final TextView priceTv = new TextView(this);
             final Button b = new Button(this);
+            final TableRow tableRow = new TableRow(this);
+            tableRow.setLayoutParams(new TableLayout.LayoutParams(
+                    TableLayout.LayoutParams.WRAP_CONTENT,
+                    TableLayout.LayoutParams.WRAP_CONTENT, 1.0f));
             b.setText("X");
             b.setBackgroundColor(Color.RED);
             b.setTextColor(Color.WHITE);
-            b.setScaleX(0.5f);
-            b.setScaleY(0.5f);
-            final LinearLayout l = new LinearLayout(this);
-            l.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            l.setOrientation(LinearLayout.HORIZONTAL);
-            tv.setText(MainScreen.c.getShopList().get(i).getName()+" "+MainScreen.c.getShopList().get(i).getPrice()+"€"+" ");
+            //b.setScaleX(0.5f);
+            //b.setScaleY(0.5f);
+            //final LinearLayout l = new LinearLayout(this);
+            //l.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            //l.setOrientation(LinearLayout.HORIZONTAL);
+            makerTv.setText(MainScreen.c.getShopList().get(i).getMaker());
+            makerTv.setTextColor(Color.BLACK);
+            makerTv.setTextSize(18);
+            modelTv.setText(MainScreen.c.getShopList().get(i).getModel());
+            modelTv.setTextColor(Color.BLACK);
+            modelTv.setTextSize(18);
+            priceTv.setText(MainScreen.c.getShopList().get(i).getPrice()+"€");
+            priceTv.setTextColor(Color.BLACK);
+            priceTv.setTextSize(18);
+            //tv.setText(MainScreen.c.getShopList().get(i).getName()+" "+MainScreen.c.getShopList().get(i).getPrice()+"€"+" ");
             price+=Float.parseFloat(MainScreen.c.getShopList().get(i).getPrice());
-            tv.setTextColor(Color.BLACK);
-            tv.setTextSize(18);
+            //tv.setTextColor(Color.BLACK);
+            //tv.setTextSize(18);
             //tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             //tv.getLayoutParams().width = (int)(ViewGroup.LayoutParams.MATCH_PARENT * 0.7f);
-            l.addView(tv);
-            l.addView(b);
+            //l.addView(tv);
+            //l.addView(b);
+            tableRow.addView(makerTv);
+            tableRow.addView(modelTv);
+            tableRow.addView(priceTv);
+            tableRow.addView(b);
+            tableLayout.addView(tableRow);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     MainScreen.c.getShopList().remove(temp);
-                    l.removeView(tv);
-                    l.removeView(b);
+                    //tableRow.removeAllViews();
+                    //tableRow.removeView(makerTv);
+                    //tableRow.removeView(modelTv);
+                    //tableRow.removeView(priceTv);
+                    //tableRow.removeView(b);
+                    tableLayout.removeView(tableRow);
+                    //l.removeView(tv);
+                    //l.removeView(b);
                     finish();
                     startActivity(getIntent());
                 }
             });
-            list.addView(l);
+
         }
         TextView totalPrice = new TextView(this);
         totalPrice.setText("Total = "+price+"€");
