@@ -62,7 +62,7 @@ public class SignUp extends AppCompatActivity {
                 int checkedRadioButtonId = type.getCheckedRadioButtonId();
 
                 if (etName.length() == 0 || etPassword.length() == 0 || etAddress.length() == 0 || etEmail.length() == 0 || etNif.length() == 0 || checkedRadioButtonId == -1) {
-                    Toast.makeText(getBaseContext(), "Todos os campos devem ser preenchidos.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "All fields must be filled.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

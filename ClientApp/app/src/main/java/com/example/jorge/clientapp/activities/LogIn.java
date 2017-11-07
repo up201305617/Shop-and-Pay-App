@@ -47,7 +47,7 @@ public class LogIn extends AppCompatActivity {
                 password = etPassword.getText().toString();
 
                 if(email.length() == 0 || password.length() == 0){
-                    Toast.makeText(getBaseContext(), "Todos os campos devem ser preenchidos.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "All fields must be filled.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else if(!etEmail.getText().toString().matches(Utils.EMAIL)){
@@ -134,8 +134,20 @@ public class LogIn extends AppCompatActivity {
                     finish();
                 }
                 else{
-                    Toast.makeText(getBaseContext(),"Wrong Credentials",Toast.LENGTH_SHORT).show();
-                    return;
+                    boolean no_user = result.matches(".*\\bUser\\b.*");
+                    boolean no_password = result.matches(".*\\bPassword\\b.*");
+                    if(no_user){
+                        Toast.makeText(getBaseContext(),"User Not Found.",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else if(no_password){
+                        Toast.makeText(getBaseContext(),"Wrong Password.",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else{
+                        Toast.makeText(getBaseContext(),"Wrong Credentials.",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
             }
 
