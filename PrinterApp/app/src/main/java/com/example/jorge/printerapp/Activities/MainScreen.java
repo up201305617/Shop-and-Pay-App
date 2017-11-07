@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.jorge.printerapp.R;
 import com.example.jorge.printerapp.Utils.Routes;
@@ -124,19 +125,20 @@ public class MainScreen extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if(result == null){
+                Toast.makeText(getBaseContext(), "Not Connected to Server.", Toast.LENGTH_SHORT).show();
                 return;
             }
             else {
                 Intent intent;
                 boolean contains = result.matches(".*\\bfalse\\b.*");
                 if(contains){
+                    Toast.makeText(getBaseContext(), "Not Found.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else {
                     intent = new Intent(MainScreen.this, DisplayList.class);
                     intent.putExtra("List",result);
                     startActivity(intent);
-                    //finish();
                 }
             }
         }

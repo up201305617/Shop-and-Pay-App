@@ -20,9 +20,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class DisplayList extends AppCompatActivity {
-    RelativeLayout rl;
+
     TableLayout tableLayout;
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
