@@ -73,7 +73,7 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HttpAsyncTask get = new HttpAsyncTask(Utils.PAST);
-                get.execute(Routes.GetPastTransactions+c.getEmail());
+                get.execute(Routes.buildGetPastTransactionsRoute(Routes.IP_ADDRESS)+c.getEmail());
             }
         });
     }
@@ -128,7 +128,7 @@ public class MainScreen extends AppCompatActivity {
                 }
                 String format = data.getStringExtra("SCAN_RESULT_FORMAT");
                 HttpAsyncTask get = new HttpAsyncTask(Utils.SHOP_LIST);
-                get.execute(Routes.GetProductByBarCode+contents);
+                get.execute(Routes.buildGetProductByBarCodeRoute(Routes.IP_ADDRESS)+contents);
             }
         }
     }

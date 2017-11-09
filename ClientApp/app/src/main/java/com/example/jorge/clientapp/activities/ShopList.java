@@ -121,8 +121,14 @@ public class ShopList extends AppCompatActivity {
         buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HttpAsyncTask post = new HttpAsyncTask();
-                post.execute(Routes.PostShopList);
+                if(MainScreen.c.getShopList().size() == 0){
+                    Toast.makeText(getBaseContext(), "You don't have any products.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    HttpAsyncTask post = new HttpAsyncTask();
+                    post.execute(Routes.buildPostShopListRoute(Routes.IP_ADDRESS));
+                }
             }
         });
         list.addView(buy);
@@ -171,7 +177,7 @@ public class ShopList extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            if(result.equals(null)) {
+            if(result==null) {
                 return;
             }
             else {

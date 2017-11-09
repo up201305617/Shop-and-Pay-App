@@ -38,7 +38,6 @@ public class LogIn extends AppCompatActivity {
         signup = (Button) findViewById(R.id.sign_up);
         etEmail = (EditText) findViewById(R.id.lEmail);
         etPassword = (EditText) findViewById(R.id.lPassword);
-
         login.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -56,10 +55,7 @@ public class LogIn extends AppCompatActivity {
                 }
                 else{
                     HttpAsyncTask post = new HttpAsyncTask();
-                    //post.execute(Routes.LogInRouteEmulator, email,password);
-                    post.execute(Routes.LogInRoute,email,password);
-                    //post.execute(Routes.LogInRouteFEUP,email,password);
-                    //post.execute("http://10.0.2.2:3000/api/login", email,password);
+                    post.execute(Routes.buildLogInRoute(Routes.IP_ADDRESS),email,password);
                 }
             }
         });

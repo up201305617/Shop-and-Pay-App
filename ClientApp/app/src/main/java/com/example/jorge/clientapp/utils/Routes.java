@@ -17,4 +17,31 @@ public class Routes {
     public static String PostShopList = "http://192.168.1.66:3000/api/shoplist";
     public static String GetPastTransactions = "http://192.168.1.66:3000/api/shoplists/";
     public static String GetPastTransactionsFEUP = "http://172.30.7.223:3000/api/shoplists/";
+    public static String IP_ADDRESS;
+    public static String IPLogInRoute = "http://"+IP_ADDRESS+":3000/api/login";
+
+    public static String buildLogInRoute(String ip){
+        String address =  "http://"+ip+":3000/api/login";
+        return address.replace(" ","");
+    }
+
+    public static String buildSignUpRoute(String ip){
+        String address =  "http://"+ip+":3000/api/user";
+        return address.replace(" ","");
+    }
+
+    public static String buildGetProductByBarCodeRoute(String ip){
+        String address =  "http://"+ip+":3000/api/product/";
+        return address.replace(" ","");
+    }
+
+    public static String buildPostShopListRoute(String ip){
+        String address =  "http://"+ip+":3000/api/shoplist";
+        return address.replace(" ","");
+    }
+
+    public static String buildGetPastTransactionsRoute(String ip){
+        String address =  "http://"+ip+":3000/api/shoplists/";
+        return address.replace(" ","");
+    }
 }

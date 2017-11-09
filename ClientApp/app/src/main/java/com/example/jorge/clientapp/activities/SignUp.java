@@ -119,9 +119,7 @@ public class SignUp extends AppCompatActivity {
                 //Utils.savePrivateKey(k.getPri(),getFilesDir()+"");
 
                 HttpAsyncTask post = new HttpAsyncTask();
-                //post.execute(Routes.SignUpRouteFEUP, name,address,nif,email,password,ccType,ccNumber, ccValidity, base64);
-                post.execute(Routes.SignUpRoute, name,address,nif,email,password,ccType,ccNumber, ccValidity);
-                //post.execute("http://10.0.2.2:3000/api/user", name,address,nif,email,password);
+                post.execute(Routes.buildSignUpRoute(Routes.IP_ADDRESS), name,address,nif,email,password,ccType,ccNumber, ccValidity);
             }
         });
     }
