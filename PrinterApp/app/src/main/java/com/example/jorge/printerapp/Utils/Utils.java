@@ -21,4 +21,9 @@ public class Utils {
         bufferedReader.close();
         return result;
     }
+
+    public static final String IP_REGEX = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+            "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+            "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+            "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
 }

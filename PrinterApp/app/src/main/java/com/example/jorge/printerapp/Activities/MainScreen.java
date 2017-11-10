@@ -84,7 +84,7 @@ public class MainScreen extends AppCompatActivity {
                 String format = data.getStringExtra("SCAN_RESULT_FORMAT");
                 Log.i("Formal",contents);
                 HttpAsyncTask get = new HttpAsyncTask();
-                get.execute(Routes.GetShopListByUUID+contents);
+                get.execute(Routes.buildGetShopListByUUID(Routes.IP_ADDRESS)+contents);
             }
         }
     }
@@ -103,11 +103,6 @@ public class MainScreen extends AppCompatActivity {
                 urlConnection.connect();
                 InputStream input = urlConnection.getInputStream();
                 response = new JSONObject(Utils.convertInputStreamToString(input).toString());
-                Log.i("RESPOSTA",response.toString());
-                JSONObject jsonObj = new JSONObject(response.toString());
-                JSONObject aux = new JSONObject(jsonObj.getJSONArray("list").get(0).toString());
-                Log.i("Vamod", jsonObj.getString("list"));
-                Log.i("Vamod", aux.getString("maker"));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {

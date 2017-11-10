@@ -185,12 +185,24 @@ public class MainScreen extends AppCompatActivity {
                             intent = new Intent(MainScreen.this, ProductDetails.class);
                             String r = result.replace("[","").replace("]","").replace("{","").replace("}","").replace(":"," ").replace(","," ").replace("\"","");
                             Log.i("SUBSTITUICAO",r);
-                            String[] split = r.split(" ");
+                            JSONObject prod=null;
+                            try {
+                                prod = new JSONObject(new JSONObject(result).getString("product"));
+                                p.setCategory(prod.getString("category"));
+                                p.setName(prod.getString("name"));
+                                p.setPrice(prod.getString("price"));
+                                p.setModel(prod.getString("model"));
+                                p.setMaker(prod.getString("maker"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            /*String[] split = r.split(" ");
                             p.setCategory(split[2]);
                             p.setModel(split[4]);
                             p.setPrice(split[6]);
                             p.setMaker(split[10]);
-                            p.setName(split[12]);
+                            p.setName(split[12]);*/
+
                             intent.putExtra("Product",p);
                             startActivity(intent);
                         }
