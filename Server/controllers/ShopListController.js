@@ -32,20 +32,6 @@ exports.insertShopList = function(req,res){
             }
         });
     }
-    
-    /*User.findOne({email: req.body.email}, function(err, user){
-        if(!user){
-            console.log("Error");
-        }
-        else if(user){
-            //console.log(user);
-            var verifier = crypto.createVerify('RSA-SHA1');
-            verifier.update(req.body.products+"");
-            verifier.end();
-            var verified = verifier.verify(test, req.body.signature,'base64');
-            console.log(verified);
-        }
-    });*/
 };
 
 exports.getAllLists = function(req,res){

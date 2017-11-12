@@ -79,12 +79,12 @@ var tablet = new Product({
   }
 });*/
 
-tablet.save(function(err){
+/*tablet.save(function(err){
   console.log("Saved");
   if(err){
     console.log(err);
   }
-});
+});*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
