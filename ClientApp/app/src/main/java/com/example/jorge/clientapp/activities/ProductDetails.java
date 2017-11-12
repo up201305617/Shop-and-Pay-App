@@ -26,9 +26,7 @@ public class ProductDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
-        //ActionBar ab = getSupportActionBar();
-        //ab.setDisplayHomeAsUpEnabled(true);
+
         Bundle bundle = getIntent().getExtras();
         p = (Product) bundle.get("Product") ;
 
@@ -53,15 +51,4 @@ public class ProductDetails extends AppCompatActivity {
             }
         });
     }
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 }

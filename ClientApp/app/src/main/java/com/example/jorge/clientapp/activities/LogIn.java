@@ -85,14 +85,12 @@ public class LogIn extends AppCompatActivity {
                     urlConnection.setRequestMethod("POST");
                     urlConnection.connect();
                     String stringJson = Utils.buildLogInJSON(params[1],params[2]);
-                    Log.i("JSON",stringJson);
                     OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
                     writer.write(stringJson);
                     writer.flush();
                     writer.close();
                     InputStream input = urlConnection.getInputStream();
                     response = new JSONObject(Utils.convertInputStreamToString(input).toString());
-                    Log.i("RESPOSTA",response.toString());
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

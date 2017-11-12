@@ -139,14 +139,12 @@ public class SignUp extends AppCompatActivity {
                     urlConnection.setRequestMethod("POST");
                     urlConnection.connect();
                     String stringJson = Utils.buildUserJSON(params[1],params[2],params[3],params[4],params[5],params[6],params[7],params[8]);
-                    Log.i("String",stringJson);
                     OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
                     writer.write(stringJson);
                     writer.flush();
                     writer.close();
                     InputStream input = urlConnection.getInputStream();
                     response = new JSONObject(Utils.convertInputStreamToString(input).toString());
-                    Log.i("Response",response.toString());
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

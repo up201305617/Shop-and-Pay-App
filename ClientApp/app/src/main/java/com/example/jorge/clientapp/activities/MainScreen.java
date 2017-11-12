@@ -151,8 +151,6 @@ public class MainScreen extends AppCompatActivity {
                 urlConnection.connect();
                 InputStream input = urlConnection.getInputStream();
                 response = new JSONObject(Utils.convertInputStreamToString(input).toString());
-                //String r = response.toString().replace("[","").replace("]","").replace("{","").replace("}","").replace(":"," ").replace(","," ");
-                Log.i("RESPOSTA",response.toString());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -180,11 +178,8 @@ public class MainScreen extends AppCompatActivity {
                         Product p = new Product();
                         boolean contains = result.matches(".*\\bfalse\\b.*");
                         if(!contains){
-                            Log.i("ENTREI",1+"");
-                            Log.i("SPLIT",result);
                             intent = new Intent(MainScreen.this, ProductDetails.class);
-                            String r = result.replace("[","").replace("]","").replace("{","").replace("}","").replace(":"," ").replace(","," ").replace("\"","");
-                            Log.i("SUBSTITUICAO",r);
+                            //String r = result.replace("[","").replace("]","").replace("{","").replace("}","").replace(":"," ").replace(","," ").replace("\"","");
                             JSONObject prod=null;
                             try {
                                 prod = new JSONObject(new JSONObject(result).getString("product"));
@@ -196,12 +191,6 @@ public class MainScreen extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            /*String[] split = r.split(" ");
-                            p.setCategory(split[2]);
-                            p.setModel(split[4]);
-                            p.setPrice(split[6]);
-                            p.setMaker(split[10]);
-                            p.setName(split[12]);*/
 
                             intent.putExtra("Product",p);
                             startActivity(intent);

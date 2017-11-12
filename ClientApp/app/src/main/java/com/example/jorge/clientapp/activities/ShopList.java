@@ -64,11 +64,7 @@ public class ShopList extends AppCompatActivity {
             b.setText("X");
             b.setBackgroundColor(Color.RED);
             b.setTextColor(Color.WHITE);
-            //b.setScaleX(0.5f);
-            //b.setScaleY(0.5f);
-            //final LinearLayout l = new LinearLayout(this);
-            //l.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            //l.setOrientation(LinearLayout.HORIZONTAL);
+
             makerTv.setText(MainScreen.c.getShopList().get(i).getMaker());
             makerTv.setTextColor(Color.BLACK);
             makerTv.setTextSize(18);
@@ -78,14 +74,7 @@ public class ShopList extends AppCompatActivity {
             priceTv.setText(MainScreen.c.getShopList().get(i).getPrice()+"€");
             priceTv.setTextColor(Color.BLACK);
             priceTv.setTextSize(18);
-            //tv.setText(MainScreen.c.getShopList().get(i).getName()+" "+MainScreen.c.getShopList().get(i).getPrice()+"€"+" ");
             price+=Float.parseFloat(MainScreen.c.getShopList().get(i).getPrice());
-            //tv.setTextColor(Color.BLACK);
-            //tv.setTextSize(18);
-            //tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-            //tv.getLayoutParams().width = (int)(ViewGroup.LayoutParams.MATCH_PARENT * 0.7f);
-            //l.addView(tv);
-            //l.addView(b);
             tableRow.addView(makerTv);
             tableRow.addView(modelTv);
             tableRow.addView(priceTv);
@@ -95,14 +84,7 @@ public class ShopList extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     MainScreen.c.getShopList().remove(temp);
-                    //tableRow.removeAllViews();
-                    //tableRow.removeView(makerTv);
-                    //tableRow.removeView(modelTv);
-                    //tableRow.removeView(priceTv);
-                    //tableRow.removeView(b);
                     tableLayout.removeView(tableRow);
-                    //l.removeView(tv);
-                    //l.removeView(b);
                     finish();
                     startActivity(getIntent());
                 }
@@ -152,14 +134,12 @@ public class ShopList extends AppCompatActivity {
                     //PrivateKey priKey = Utils.loadPrivateKey(getFilesDir()+"","RSA");
                     //byte [] sig = Utils.signShopList(priKey,prodArray.getBytes("UTF-8"));
                     String stringJson = Utils.buildShopListJSON(MainScreen.c.getEmail(),MainScreen.c.getShopList(),price);
-                    Log.i("PEDIDO",stringJson);
                     OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
                     writer.write(stringJson);
                     writer.flush();
                     writer.close();
                     InputStream input = urlConnection.getInputStream();
                     response = new JSONObject(Utils.convertInputStreamToString(input).toString());
-                    Log.i("RESPOSTA",response.toString());
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

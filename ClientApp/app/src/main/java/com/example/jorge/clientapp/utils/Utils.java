@@ -1,6 +1,5 @@
 package com.example.jorge.clientapp.utils;
 
-import android.util.Log;
 
 import com.example.jorge.clientapp.entities.Product;
 
@@ -22,9 +21,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-
-import static android.R.attr.path;
 
 /**
  * Created by Jorge on 18/10/2017.
