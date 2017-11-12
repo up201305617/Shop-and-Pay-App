@@ -56,6 +56,15 @@ var computer = new Product({
   barcode: "12853478357"
 });
 
+var tablet = new Product({
+  price: "99.99",
+  name: "Tablet",
+  model: "Pixis",
+  maker: "Alcatel",
+  category: "electronics",
+  barcode: "83248709823"
+});
+
 /*product.save(function(err){
   console.log("Saved");
   if(err){
@@ -69,6 +78,13 @@ var computer = new Product({
     console.log(err);
   }
 });*/
+
+tablet.save(function(err){
+  console.log("Saved");
+  if(err){
+    console.log(err);
+  }
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
